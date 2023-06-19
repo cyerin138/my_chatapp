@@ -60,8 +60,36 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  int _selectedIndex = 0;
+
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = [
+    groupList(),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -76,10 +104,62 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text(
-          "Groups",
+        title:  Text(
+          "콘톡",
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'kbo'),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          elevation: 20,
+          items: [
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                child: Icon(Icons.format_list_bulleted,
+                  size: 30,
+                ),
+              ),
+              label: '방 목록',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                child: Icon(Icons.search,
+                  size: 30,),
+              ),
+              label: '방 검색',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                child: Icon(Icons.sentiment_satisfied_alt,
+                  size: 30,),
+              ),
+              label: '임티',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                child: Icon(Icons.person,
+                  size: 30,),
+              ),
+              label: '계정',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Theme.of(context).primaryColor,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
+          unselectedFontSize: 12,
+          selectedFontSize: 12,
+          onTap: _onItemTapped,
         ),
       ),
       drawer: Drawer(
@@ -180,7 +260,9 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       )),
-      body: groupList(),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           popUpDialog(context);

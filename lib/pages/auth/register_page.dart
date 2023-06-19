@@ -49,13 +49,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         Text("회원가입으로 콘톡 계정을 생성하세요!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
-                        SizedBox(height: 30),
+                        SizedBox(height: 10),
                         Image.asset(
                           "assets/register.jpg",
-                          width: 350,
+                          width: 370,
                           fit: BoxFit.fill,
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 15),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
                               labelText: "닉네임",
@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           },
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 15,
                         ),
                         TextFormField(
@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         SizedBox(
                           width: double.infinity,
@@ -148,11 +148,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 primary: Theme.of(context).primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30))),
+                                    borderRadius: BorderRadius.circular(30)),
+                                padding: EdgeInsets.all(23)),
                             child: const Text(
-                              "Register",
+                              "회원가입",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                             onPressed: () {
                               register();
@@ -160,16 +161,15 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Text.rich(TextSpan(
-                          text: "Already have an account? ",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 14),
-                          children: <TextSpan>[
+                          text: "계정이 이미 있으신가요?  ",
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                          children: [
                             TextSpan(
-                                text: "Login now",
-                                style: const TextStyle(
+                                text: "로그인",
+                                style: TextStyle(
                                     color: Colors.black,
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()

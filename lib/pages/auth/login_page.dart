@@ -61,19 +61,16 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 50),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
-                            labelText: "이메일",
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Icon(
-                                Icons.email,
-                                color: Theme.of(context).primaryColor,
+                              labelText: "이메일",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Icon(
+                                  Icons.email,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
-                            ),
-                              labelStyle: TextStyle(
-                                  color: Colors.grey
-                              )
-                          ),
+                              labelStyle: TextStyle(color: Colors.grey)),
                           onChanged: (val) {
                             setState(() {
                               email = val;
@@ -91,19 +88,16 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormField(
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
-                            labelText: "비밀번호",
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Icon(
-                                Icons.lock,
-                                color: Theme.of(context).primaryColor,
+                              labelText: "비밀번호",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Icon(
+                                  Icons.lock,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey
-                            )
-                          ),
+                              labelStyle: TextStyle(color: Colors.grey)),
                           validator: (val) {
                             if (val!.length < 6) {
                               return "비밀번호는 6글자가 넘어야합니다.";
@@ -128,9 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
-                                padding: EdgeInsets.all(23)
-                            ),
-
+                                padding: EdgeInsets.all(23)),
                             child: const Text(
                               "로그인",
                               style:
@@ -146,12 +138,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Text.rich(TextSpan(
                           text: "계정이 없으신가요?  ",
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 14),
-                          children: <TextSpan>[
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                          children: [
                             TextSpan(
                                 text: "회원가입",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.black,
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
