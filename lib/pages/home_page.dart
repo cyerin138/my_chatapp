@@ -145,126 +145,7 @@ class _HomePageState extends State<HomePage> {
           Text(
             '이모티콘 입주예정',
           ),
-          Center(
-              child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 40),
-            children: [
-              Icon(
-                Icons.account_circle,
-                size: 150,
-                color: Colors.grey[400],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                userName,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                email,
-                textAlign: TextAlign.center,
-                style: TextStyle( fontSize: 20, color: Colors.grey),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              const Divider(
-                height: 2,
-              ),
-
-              ListTile(
-                onTap: () async {
-                  showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text(
-                            "로그 아웃",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: Text(
-                                  "정말 로그아웃 하시겠습니까?",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.black87),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 110,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        await authService.signOut();
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const LoginPage()),
-                                                (route) => false);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Theme.of(context).primaryColor,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0, vertical: 18),
-                                      ),
-                                      child: Text("로그아웃"),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 110,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          side: BorderSide(
-                                            width: 0.5,
-                                            color: Color.fromARGB(
-                                                255, 65, 232, 201),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 18),
-                                          backgroundColor: Colors.white),
-                                      child: Text("닫기",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                },
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                leading: const Icon(Icons.exit_to_app),
-                title: const Text(
-                  "로그아웃",
-                  style: TextStyle(color: Colors.black),
-                ),
-              )
-            ],
-          )),
+          userProfile()
         ].elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
@@ -446,5 +327,129 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+
+  userProfile() {
+    return  Center(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 40),
+          children: [
+            Icon(
+              Icons.account_circle,
+              size: 150,
+              color: Colors.grey[600],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              userName,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              email,
+              textAlign: TextAlign.center,
+              style: TextStyle( fontSize: 16, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            const Divider(
+              height: 2,
+            ),
+
+            ListTile(
+              onTap: () async {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "로그 아웃",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87),
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              child: Text(
+                                "정말 로그아웃 하시겠습니까?",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black87),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      await authService.signOut();
+                                      Navigator.of(context)
+                                          .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const LoginPage()),
+                                              (route) => false);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Theme.of(context).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 18),
+                                    ),
+                                    child: Text("로그아웃"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        side: BorderSide(
+                                          width: 0.5,
+                                          color: Color.fromARGB(
+                                              255, 65, 232, 201),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 18),
+                                        backgroundColor: Colors.white),
+                                    child: Text("닫기",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .primaryColor)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text(
+                "로그아웃",
+                style: TextStyle(color: Colors.black),
+              ),
+            )
+          ],
+        ));
   }
 }

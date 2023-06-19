@@ -161,7 +161,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       title:
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0,0, 3),
+            padding: const EdgeInsets.fromLTRB(0, 0,0, 4),
             child: Text(groupName, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w800)),
           ),
       subtitle: Text("방장 : ${getName(admin)} 님"),

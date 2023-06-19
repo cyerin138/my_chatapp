@@ -31,7 +31,7 @@ class _GroupTileState extends State<GroupTile> {
             ));
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         child: ListTile(
           leading: CircleAvatar(
             radius: 30,
@@ -40,15 +40,16 @@ class _GroupTileState extends State<GroupTile> {
               widget.groupName.substring(0, 1).toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w500),
+                  color: Colors.white),
             ),
           ),
-          title: Text(
-            widget.groupName,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          title:
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0,0, 4),
+            child: Text( widget.groupName, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w800)),
           ),
           subtitle: Text(
-            "Join the conversation as ${widget.userName}",
+            "${widget.userName} 님이 방에 입장 ",
             style: const TextStyle(fontSize: 13),
           ),
         ),
