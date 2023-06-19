@@ -149,21 +149,23 @@ class _HomePageState extends State<HomePage> {
           Center(
               child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 50),
-            children: <Widget>[
+            children: [
               Icon(
                 Icons.account_circle,
                 size: 150,
-                color: Colors.grey[700],
+                color: Colors.grey[400],
               ),
-              const SizedBox(
-                height: 15,
+              SizedBox(
+                height: 10,
               ),
               Text(
                 userName,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize: 25
+                ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
               const Divider(
@@ -193,34 +195,49 @@ class _HomePageState extends State<HomePage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text("Logout"),
+                          title: const Text(
+                            "로그 아웃",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87),
+                          ),
                           content:
-                              const Text("Are you sure you want to logout?"),
-                          actions: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                Icons.cancel,
-                                color: Colors.red,
+                          Column(
+                            children: [
+                              Text("정말 로그아웃 하시겠습니까?"),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await authService.signOut();
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const LoginPage()),
+                                              (route) => false);
+                                    },
+                                    icon: const Icon(
+                                      Icons.done,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                await authService.signOut();
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginPage()),
-                                    (route) => false);
-                              },
-                              icon: const Icon(
-                                Icons.done,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
+
+                            ],
+                          ),
+
                         );
                       });
                 },
@@ -228,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text(
-                  "Logout",
+                  "로그아웃",
                   style: TextStyle(color: Colors.black),
                 ),
               )
