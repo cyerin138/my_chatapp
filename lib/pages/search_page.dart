@@ -48,31 +48,26 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   title: const Text(
-      //     "Search",
-      //     style: TextStyle(
-      //         fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white),
-      //   ),
-      // ),
       child: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 1, color: Colors.grey),
+              ),
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: searchController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search groups....",
+                        hintText: "방 검색하기",
                         hintStyle:
-                            TextStyle(color: Colors.white, fontSize: 16)),
+                            TextStyle(color: Colors.grey, fontSize: 18)),
                   ),
                 ),
                 GestureDetector(
@@ -83,11 +78,11 @@ class _SearchPageState extends State<SearchPage> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Theme.of(context).primaryColor.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(40)),
-                    child: const Icon(
+                    child: Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 )
@@ -155,7 +150,7 @@ class _SearchPageState extends State<SearchPage> {
     // function to check whether user already exists in group
     joinedOrNot(userName, groupId, groupName, admin);
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       leading: CircleAvatar(
         radius: 30,
         backgroundColor: Theme.of(context).primaryColor,
@@ -165,8 +160,11 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
       title:
-          Text(groupName, style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: Text("Admin: ${getName(admin)}"),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0,0, 3),
+            child: Text(groupName, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w800)),
+          ),
+      subtitle: Text("방장 : ${getName(admin)} 님"),
       trailing: InkWell(
         onTap: () async {
           await DatabaseService(uid: user!.uid)
@@ -175,7 +173,7 @@ class _SearchPageState extends State<SearchPage> {
             setState(() {
               isJoined = !isJoined;
             });
-            showSnackbar(context, Colors.green, "Successfully joined he group");
+            showSnackbar(context, Colors.green, "성공적으로 방에 입장하셨습니다.");
             Future.delayed(const Duration(seconds: 2), () {
               nextScreen(
                   context,
@@ -187,7 +185,7 @@ class _SearchPageState extends State<SearchPage> {
           } else {
             setState(() {
               isJoined = !isJoined;
-              showSnackbar(context, Colors.red, "Left the group $groupName");
+              showSnackbar(context, Colors.red, "$groupName 방에서 퇴장하셨습니다.");
             });
           }
         },
@@ -195,14 +193,14 @@ class _SearchPageState extends State<SearchPage> {
             ? Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.black,
-                  border: Border.all(color: Colors.white, width: 1),
+                  color: Colors.white,
+                  border: Border.all(color: Color.fromARGB(255, 65, 232, 201), width: 1),
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: const Text(
-                  "Joined",
-                  style: TextStyle(color: Colors.white),
+                  "입장완료",
+                  style: TextStyle(color:Color.fromARGB(255, 65, 232, 201)),
                 ),
               )
             : Container(
@@ -212,7 +210,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: const Text("Join Now",
+                child: const Text("입장하기",
                     style: TextStyle(color: Colors.white)),
               ),
       ),

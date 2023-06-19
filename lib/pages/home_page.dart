@@ -68,33 +68,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                nextScreen(context, const SearchPage());
-              },
-              icon: const Icon(
-                Icons.search,
-              ))
-        ],
-        elevation: 0,
         centerTitle: true,
+        elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
-        title:  Text(
+        title: Text(
           "콘톡",
           style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'kbo'),
+              fontSize: 30, fontWeight: FontWeight.bold, fontFamily: 'kbo'),
         ),
+        automaticallyImplyLeading: false,
       ),
       bottomNavigationBar: SizedBox(
         height: 70,
@@ -106,7 +92,8 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                child: Icon(Icons.format_list_bulleted,
+                child: Icon(
+                  Icons.format_list_bulleted,
                   size: 30,
                 ),
               ),
@@ -115,24 +102,30 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                child: Icon(Icons.search,
-                  size: 30,),
+                child: Icon(
+                  Icons.search,
+                  size: 30,
+                ),
               ),
               label: '방 검색',
             ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                child: Icon(Icons.sentiment_satisfied_alt,
-                  size: 30,),
+                child: Icon(
+                  Icons.sentiment_satisfied_alt,
+                  size: 30,
+                ),
               ),
               label: '임티',
             ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                child: Icon(Icons.person,
-                  size: 30,),
+                child: Icon(
+                  Icons.person,
+                  size: 30,
+                ),
               ),
               label: '계정',
             ),
@@ -146,117 +139,101 @@ class _HomePageState extends State<HomePage> {
           onTap: _onItemTapped,
         ),
       ),
-      drawer: Drawer(
-          ),
       body: Center(
         child: [
           groupList(),
-        Text(
-          'Index 1: Business',
-        ),
-        Text(
-          'Index 2: School',
-        ),
+          new SearchPage(),
+          Text(
+            '이모티콘 입주예정',
+          ),
           Center(
               child: ListView(
-                padding: const EdgeInsets.symmetric(vertical: 50),
-                children: <Widget>[
-                  Icon(
-                    Icons.account_circle,
-                    size: 150,
-                    color: Colors.grey[700],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    userName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Divider(
-                    height: 2,
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    selectedColor: Theme.of(context).primaryColor,
-                    selected: true,
-                    contentPadding:
+            padding: const EdgeInsets.symmetric(vertical: 50),
+            children: <Widget>[
+              Icon(
+                Icons.account_circle,
+                size: 150,
+                color: Colors.grey[700],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                userName,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Divider(
+                height: 2,
+              ),
+              ListTile(
+                onTap: () {
+                  nextScreenReplace(
+                      context,
+                      ProfilePage(
+                        userName: userName,
+                        email: email,
+                      ));
+                },
+                contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    leading: const Icon(Icons.group),
-                    title: const Text(
-                      "Groups",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      nextScreenReplace(
-                          context,
-                          ProfilePage(
-                            userName: userName,
-                            email: email,
-                          ));
-                    },
-                    contentPadding:
+                leading: const Icon(Icons.group),
+                title: const Text(
+                  "Profile",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              ListTile(
+                onTap: () async {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Logout"),
+                          content:
+                              const Text("Are you sure you want to logout?"),
+                          actions: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () async {
+                                await authService.signOut();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginPage()),
+                                    (route) => false);
+                              },
+                              icon: const Icon(
+                                Icons.done,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        );
+                      });
+                },
+                contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    leading: const Icon(Icons.group),
-                    title: const Text(
-                      "Profile",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () async {
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Logout"),
-                              content: const Text("Are you sure you want to logout?"),
-                              actions: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    await authService.signOut();
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) => const LoginPage()),
-                                            (route) => false);
-                                  },
-                                  icon: const Icon(
-                                    Icons.done,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    leading: const Icon(Icons.exit_to_app),
-                    title: const Text(
-                      "Logout",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  )
-
-                ],
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.black),
+                ),
               )
-          ),
+            ],
+          )),
         ].elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
@@ -282,7 +259,7 @@ class _HomePageState extends State<HomePage> {
           return StatefulBuilder(builder: ((context, setState) {
             return AlertDialog(
               title: const Text(
-                "Create a group",
+                "방 만들기",
                 textAlign: TextAlign.left,
               ),
               content: Column(
@@ -323,7 +300,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Theme.of(context).primaryColor),
-                  child: const Text("CANCEL"),
+                  child: const Text("나가기"),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -340,12 +317,12 @@ class _HomePageState extends State<HomePage> {
                       });
                       Navigator.of(context).pop();
                       showSnackbar(
-                          context, Colors.green, "Group created successfully.");
+                          context, Colors.green, "성공적으로 방이 생성되었습니다.");
                     }
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Theme.of(context).primaryColor),
-                  child: const Text("CREATE"),
+                  child: const Text("생성"),
                 )
               ],
             );
@@ -400,17 +377,26 @@ class _HomePageState extends State<HomePage> {
             },
             child: Icon(
               Icons.add_circle,
-              color: Colors.grey[700],
+              color: Colors.grey[400],
               size: 75,
             ),
           ),
-          const SizedBox(
-            height: 20,
+           SizedBox(
+            height: 10,
           ),
-          const Text(
-            "You've not joined any groups, tap on the add icon to create a group or also search from top search button.",
-            textAlign: TextAlign.center,
-          )
+           SizedBox(
+             width: 280,
+             child: Text(
+              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 만들거나 방 검색에서 방에 입장해보세요!",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+                height: 1.4
+              ),
+
+          ),
+           )
         ],
       ),
     );
