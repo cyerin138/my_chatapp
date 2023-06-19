@@ -27,12 +27,14 @@ flutter channel master
 flutter upgrade
 
 flutter clean
-flutter channel <master or beta>
+flutter channel master
 flutter upgrade --force
+
+flutter pub get
 
 flutter run -d chrome
 
-
+//---------------------------
 gradle wrapper --gradle-version 7.5.1
 
 flutter pub add cupertino_icons
