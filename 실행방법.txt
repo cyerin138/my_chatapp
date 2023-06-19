@@ -22,6 +22,11 @@ android sdk command-line tools, android sdk platform-tools, (밑에 hide obsolet
 flutter doctor --android-licenses
 
 
+flutter channel dev
+flutter upgrade
+flutter run -d chrome
+
+
 gradle wrapper --gradle-version 7.5.1
 
 flutter pub add cupertino_icons
