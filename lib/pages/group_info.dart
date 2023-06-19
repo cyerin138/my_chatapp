@@ -52,7 +52,7 @@ class _GroupInfoState extends State<GroupInfo> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Group Info"),
+        title: const Text("방 정보"),
         actions: [
           IconButton(
               onPressed: () {
@@ -61,7 +61,7 @@ class _GroupInfoState extends State<GroupInfo> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text("Exit"),
+                        title: const Text("방 나가기"),
                         content:
                             const Text("Are you sure you exit the group? "),
                         actions: [

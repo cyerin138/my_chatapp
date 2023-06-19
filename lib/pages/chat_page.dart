@@ -9,6 +9,7 @@ class ChatPage extends StatefulWidget {
   final String groupId;
   final String groupName;
   final String userName;
+
   const ChatPage(
       {Key? key,
       required this.groupId,
@@ -50,7 +51,10 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(widget.groupName),
+        title: Text(
+          widget.groupName,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
@@ -63,28 +67,34 @@ class _ChatPageState extends State<ChatPage> {
                       adminName: admin,
                     ));
               },
-              icon: const Icon(Icons.info))
+              icon: Icon(Icons.info_outline))
         ],
       ),
       body: Stack(
-        children: <Widget>[
+        children: [
           // chat messages here
           chatMessages(),
           Container(
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              decoration:  BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 1, color: Colors.grey.shade300),
+                ),
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               width: MediaQuery.of(context).size.width,
-              color: Colors.grey[700],
+
               child: Row(children: [
                 Expanded(
                     child: TextFormField(
                   controller: messageController,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                   decoration: const InputDecoration(
-                    hintText: "Send a message...",
-                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    hintText: "메시지를 입력해주세요",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
                     border: InputBorder.none,
                   ),
                 )),
@@ -95,18 +105,10 @@ class _ChatPageState extends State<ChatPage> {
                   onTap: () {
                     sendMessage();
                   },
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Center(
-                        child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    )),
+                  child: Icon(
+                    Icons.send,
+                    color: Theme.of(context).primaryColor,
+                    size: 30,
                   ),
                 )
               ]),
