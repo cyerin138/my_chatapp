@@ -12,12 +12,18 @@ flutter packages get
 
 flutter packages upgrade
 
+flutter doctor
 
+여러 오류
+tools > sdk manager > sdk tools 
 
-
+flutter doctor --android-licenses
 
 flutter pub add cupertino_icons
 flutter pub add firebase_core
 flutter pub add firebase_auth
 flutter pub add cloud_firestore
 flutter pub add shared_preferences
+
+
+소스\android\gradle\wrapper\gradle-wrapper.properties
