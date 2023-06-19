@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 20,
                         ),
                         Text.rich(TextSpan(

@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
           : SingleChildScrollView(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
                 child: Form(
                     key: formKey,
                     child: Column(
@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontFamily: 'kbo'),
                         ),
                         SizedBox(height: 10),
-                        Text("로그인을 하여 여러 사람들과 대화해보세요!",
+                        Text("회원가입으로 콘톡 계정을 생성하세요!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
                         SizedBox(height: 30),
@@ -55,13 +55,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: 350,
                           fit: BoxFit.fill,
                         ),
+                        SizedBox(height: 30),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
-                              labelText: "Full Name",
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Theme.of(context).primaryColor,
-                              )),
+                              labelText: "닉네임",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              labelStyle: TextStyle(color: Colors.grey)),
                           onChanged: (val) {
                             setState(() {
                               fullName = val;
@@ -71,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (val!.isNotEmpty) {
                               return null;
                             } else {
-                              return "Name cannot be empty";
+                              return "닉네임이 비여있습니다.";
                             }
                           },
                         ),
@@ -80,11 +86,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
-                              labelText: "Email",
-                              prefixIcon: Icon(
-                                Icons.email,
-                                color: Theme.of(context).primaryColor,
-                              )),
+                              labelText: "이메일",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Icon(
+                                  Icons.email,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              labelStyle: TextStyle(color: Colors.grey)),
                           onChanged: (val) {
                             setState(() {
                               email = val;
@@ -97,21 +108,26 @@ class _RegisterPageState extends State<RegisterPage> {
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(val!)
                                 ? null
-                                : "Please enter a valid email";
+                                : "이메일을 다시 확인해주세요.";
                           },
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: 15),
                         TextFormField(
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
-                              labelText: "Password",
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Theme.of(context).primaryColor,
-                              )),
+                              labelText: "비밀번호",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Icon(
+                                  Icons.lock,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              labelStyle: TextStyle(color: Colors.grey)),
                           validator: (val) {
                             if (val!.length < 6) {
-                              return "Password must be at least 6 characters";
+                              return "비밀번호는 6글자가 넘어야합니다.";
                             } else {
                               return null;
                             }
@@ -122,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             });
                           },
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 20,
                         ),
                         SizedBox(
@@ -143,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 10,
                         ),
                         Text.rich(TextSpan(
