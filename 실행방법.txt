@@ -22,8 +22,14 @@ android sdk command-line tools, android sdk platform-tools, (밑에 hide obsolet
 flutter doctor --android-licenses
 
 
-flutter channel dev
+
+flutter channel master
 flutter upgrade
+
+flutter clean
+flutter channel <master or beta>
+flutter upgrade --force
+
 flutter run -d chrome
 
 
