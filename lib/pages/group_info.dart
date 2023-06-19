@@ -54,7 +54,10 @@ class _GroupInfoState extends State<GroupInfo> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("방 정보"),
+        title: const Text(
+          "방 정보",
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -89,14 +92,15 @@ class _GroupInfoState extends State<GroupInfo> {
                                   child: ElevatedButton(
                                     onPressed: () async {
                                       DatabaseService(
-                                          uid: FirebaseAuth
-                                              .instance.currentUser!.uid)
+                                              uid: FirebaseAuth
+                                                  .instance.currentUser!.uid)
                                           .toggleGroupJoin(
-                                          widget.groupId,
-                                          getName(widget.adminName),
-                                          widget.groupName)
+                                              widget.groupId,
+                                              getName(widget.adminName),
+                                              widget.groupName)
                                           .whenComplete(() {
-                                        nextScreenReplace(context, const HomePage());
+                                        nextScreenReplace(
+                                            context, const HomePage());
                                       });
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -145,7 +149,7 @@ class _GroupInfoState extends State<GroupInfo> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(20),
                   color: Theme.of(context).primaryColor.withOpacity(0.2)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -155,12 +159,15 @@ class _GroupInfoState extends State<GroupInfo> {
                     backgroundColor: Theme.of(context).primaryColor,
                     child: Text(
                       widget.groupName.substring(0, 1).toUpperCase(),
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
-                          fontWeight: FontWeight.w500, color: Colors.white),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 20),
                     ),
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,8 +220,16 @@ class _GroupInfoState extends State<GroupInfo> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      title: Text(getName(snapshot.data['members'][index])),
-                      subtitle: Text(getId(snapshot.data['members'][index])),
+                      title: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                        child: Text(getName(snapshot.data['members'][index]),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w800)),
+                      ),
+                      subtitle: Text(
+                        getId(snapshot.data['members'][index]),
+                        style: const TextStyle(fontSize: 13),
+                      ),
                     ),
                   );
                 },
