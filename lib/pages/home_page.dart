@@ -259,8 +259,12 @@ class _HomePageState extends State<HomePage> {
           return StatefulBuilder(builder: ((context, setState) {
             return AlertDialog(
               title: const Text(
-                "방 만들기",
+                "방 생성",
                 textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -276,54 +280,58 @@ class _HomePageState extends State<HomePage> {
                               groupName = val;
                             });
                           },
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                  borderRadius: BorderRadius.circular(20)),
-                              errorBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.red),
-                                  borderRadius: BorderRadius.circular(20)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                  borderRadius: BorderRadius.circular(20))),
+                          style: TextStyle(color: Colors.black),
+                          decoration: textInputDecoration.copyWith(
+                              labelText: "방 이름",
+                              labelStyle: TextStyle(color: Colors.grey)),
                         ),
                 ],
               ),
               actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor),
-                  child: const Text("나가기"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (groupName != "") {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            DatabaseService(
+                                    uid: FirebaseAuth.instance.currentUser!.uid)
+                                .createGroup(userName,
+                                    FirebaseAuth.instance.currentUser!.uid, groupName)
+                                .whenComplete(() {
+                              _isLoading = false;
+                            });
+                            Navigator.of(context).pop();
+                            showSnackbar(context, Colors.green, "성공적으로 방이 생성되었습니다.");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).primaryColor),
+                        child: Text("방 생성"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            side: BorderSide(
+                              width: 0.5,
+                              color:Color.fromARGB(255, 65, 232, 201),
+                            ),
+                            backgroundColor: Colors.white),
+                        child: Text("나가기",
+                            style: TextStyle(color: Theme.of(context).primaryColor)),
+                      ),
+                    ],
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (groupName != "") {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      DatabaseService(
-                              uid: FirebaseAuth.instance.currentUser!.uid)
-                          .createGroup(userName,
-                              FirebaseAuth.instance.currentUser!.uid, groupName)
-                          .whenComplete(() {
-                        _isLoading = false;
-                      });
-                      Navigator.of(context).pop();
-                      showSnackbar(
-                          context, Colors.green, "성공적으로 방이 생성되었습니다.");
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor),
-                  child: const Text("생성"),
-                )
+
               ],
             );
           }));
@@ -381,22 +389,17 @@ class _HomePageState extends State<HomePage> {
               size: 75,
             ),
           ),
-           SizedBox(
+          SizedBox(
             height: 10,
           ),
-           SizedBox(
-             width: 280,
-             child: Text(
-              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 만들거나 방 검색에서 방에 입장해보세요!",
+          SizedBox(
+            width: 280,
+            child: Text(
+              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 생성하거나 방 검색에서 방에 입장해보세요!",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-                height: 1.4
-              ),
-
-          ),
-           )
+              style: TextStyle(fontSize: 14, color: Colors.grey, height: 1.4),
+            ),
+          )
         ],
       ),
     );
