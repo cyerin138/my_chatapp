@@ -92,5 +92,12 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: kbo
+      fonts:
+        - asset: fonts/KBO_Dia_Gothic_bold.ttf
+        - asset: fonts/KBO_Dia_Gothic_light.ttf
+        - asset: fonts/KBO_Dia_Gothic_medium.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

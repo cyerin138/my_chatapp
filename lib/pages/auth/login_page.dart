@@ -33,23 +33,30 @@ class _LoginPageState extends State<LoginPage> {
           : SingleChildScrollView(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
                 child: Form(
                     key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        const Text(
-                          "Groupie",
+                        Text(
+                          "콘톡",
                           style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold),
+                              fontSize: 70, fontWeight: FontWeight.bold,
+                            fontFamily: 'kbo'
+                          ),
                         ),
-                        const SizedBox(height: 10),
-                        const Text("Login now to see what they are talking!",
+                        SizedBox(height: 10),
+                        Text("로그인을 하여 여러 사람들과 대화해보세요!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
-                        Image.asset("assets/login.png"),
+                        SizedBox(height: 30),
+                        Image.asset("assets/login.jpg",
+                          width: 350,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(height: 50),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
                               labelText: "Email",
@@ -62,8 +69,6 @@ class _LoginPageState extends State<LoginPage> {
                               email = val;
                             });
                           },
-
-                          // check tha validation
                           validator: (val) {
                             return RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -72,10 +77,12 @@ class _LoginPageState extends State<LoginPage> {
                                 : "Please enter a valid email";
                           },
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: 15),
                         TextFormField(
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
+                              enabledBorder: OutlineInputBorder(
+                              ),
                               labelText: "Password",
                               prefixIcon: Icon(
                                 Icons.lock,
@@ -94,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           },
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 20,
                         ),
                         SizedBox(
@@ -104,9 +111,11 @@ class _LoginPageState extends State<LoginPage> {
                                 primary: Theme.of(context).primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30))),
+                                    borderRadius: BorderRadius.circular(30)),
+                              padding: EdgeInsets.all(20)
+                            ),
                             child: const Text(
-                              "Sign In",
+                              "로그인",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -159,9 +168,10 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
           nextScreenReplace(context, const HomePage());
         } else {
-          showSnackbar(context, Colors.red, value);
+          showSnackbar(context, Color.fromARGB(255, 65, 232, 201), value);
           setState(() {
             _isLoading = false;
+
           });
         }
       });
