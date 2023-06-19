@@ -1,6 +1,5 @@
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
-import 'package:my_chatapp/pages/profile_page.dart';
 import 'package:my_chatapp/pages/search_page.dart';
 import 'package:my_chatapp/service/auth_service.dart';
 import 'package:my_chatapp/service/database_service.dart';
@@ -148,7 +147,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Center(
               child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 50),
+            padding: const EdgeInsets.symmetric(vertical: 40),
             children: [
               Icon(
                 Icons.account_circle,
@@ -161,33 +160,23 @@ class _HomePageState extends State<HomePage> {
               Text(
                 userName,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold,
-                fontSize: 25
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
               SizedBox(
-                height: 30,
+                height: 15,
+              ),
+              Text(
+                email,
+                textAlign: TextAlign.center,
+                style: TextStyle( fontSize: 20, color: Colors.grey),
+              ),
+              SizedBox(
+                height: 40,
               ),
               const Divider(
                 height: 2,
               ),
-              ListTile(
-                onTap: () {
-                  nextScreenReplace(
-                      context,
-                      ProfilePage(
-                        userName: userName,
-                        email: email,
-                      ));
-                },
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                leading: const Icon(Icons.group),
-                title: const Text(
-                  "Profile",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
+
               ListTile(
                 onTap: () async {
                   showDialog(
@@ -195,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text(
+                          title: Text(
                             "로그 아웃",
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -203,41 +192,66 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black87),
                           ),
-                          content:
-                          Column(
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text("정말 로그아웃 하시겠습니까?"),
+                              SizedBox(
+                                height: 40,
+                                child: Text(
+                                  "정말 로그아웃 하시겠습니까?",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black87),
+                                ),
+                              ),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(
-                                      Icons.cancel,
-                                      color: Colors.red,
+                                  SizedBox(
+                                    width: 110,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        await authService.signOut();
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginPage()),
+                                                (route) => false);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Theme.of(context).primaryColor,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 18),
+                                      ),
+                                      child: Text("로그아웃"),
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () async {
-                                      await authService.signOut();
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const LoginPage()),
-                                              (route) => false);
-                                    },
-                                    icon: const Icon(
-                                      Icons.done,
-                                      color: Colors.green,
+                                  SizedBox(
+                                    width: 110,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          side: BorderSide(
+                                            width: 0.5,
+                                            color: Color.fromARGB(
+                                                255, 65, 232, 201),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0, vertical: 18),
+                                          backgroundColor: Colors.white),
+                                      child: Text("닫기",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor)),
                                     ),
                                   ),
                                 ],
                               ),
-
                             ],
                           ),
-
                         );
                       });
                 },
@@ -302,12 +316,14 @@ class _HomePageState extends State<HomePage> {
                               labelText: "방 이름",
                               labelStyle: TextStyle(color: Colors.grey)),
                         ),
-                  SizedBox( height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width :110 ,
+                        width: 110,
                         child: ElevatedButton(
                           onPressed: () async {
                             if (groupName != "") {
@@ -315,7 +331,8 @@ class _HomePageState extends State<HomePage> {
                                 _isLoading = true;
                               });
                               DatabaseService(
-                                      uid: FirebaseAuth.instance.currentUser!.uid)
+                                      uid: FirebaseAuth
+                                          .instance.currentUser!.uid)
                                   .createGroup(
                                       userName,
                                       FirebaseAuth.instance.currentUser!.uid,
@@ -337,7 +354,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        width : 110,
+                        width: 110,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
