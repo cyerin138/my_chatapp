@@ -285,54 +285,63 @@ class _HomePageState extends State<HomePage> {
                               labelText: "방 이름",
                               labelStyle: TextStyle(color: Colors.grey)),
                         ),
-                ],
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 0),
-                  child: Row(
+                  SizedBox( height: 15,),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (groupName != "") {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            DatabaseService(
-                                    uid: FirebaseAuth.instance.currentUser!.uid)
-                                .createGroup(userName,
-                                    FirebaseAuth.instance.currentUser!.uid, groupName)
-                                .whenComplete(() {
-                              _isLoading = false;
-                            });
-                            Navigator.of(context).pop();
-                            showSnackbar(context, Colors.green, "성공적으로 방이 생성되었습니다.");
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor),
-                        child: Text("방 생성"),
+                      SizedBox(
+                        width :110 ,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (groupName != "") {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              DatabaseService(
+                                      uid: FirebaseAuth.instance.currentUser!.uid)
+                                  .createGroup(
+                                      userName,
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                      groupName)
+                                  .whenComplete(() {
+                                _isLoading = false;
+                              });
+                              Navigator.of(context).pop();
+                              showSnackbar(
+                                  context, Colors.green, "성공적으로 방이 생성되었습니다.");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).primaryColor,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 18),
+                          ),
+                          child: Text("방 생성"),
+                        ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            side: BorderSide(
-                              width: 0.5,
-                              color:Color.fromARGB(255, 65, 232, 201),
-                            ),
-                            backgroundColor: Colors.white),
-                        child: Text("나가기",
-                            style: TextStyle(color: Theme.of(context).primaryColor)),
+                      SizedBox(
+                        width : 110,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              side: BorderSide(
+                                width: 0.5,
+                                color: Color.fromARGB(255, 65, 232, 201),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 18),
+                              backgroundColor: Colors.white),
+                          child: Text("닫기",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor)),
+                        ),
                       ),
                     ],
                   ),
-                ),
-
-              ],
+                ],
+              ),
             );
           }));
         });
