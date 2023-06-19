@@ -1,5 +1,21 @@
+C:\dev\src\flutter\bin
+환경변수
+
+
 flutter clean
+
+flutter upgrade
 
 flutter packages get
 
 flutter packages upgrade
+
+flutter pub get
+
+
+
+flutter pub add cupertino_icons
+flutter pub add firebase_core
+flutter pub add firebase_auth
+flutter pub add cloud_firestore
+flutter pub add shared_preferences
