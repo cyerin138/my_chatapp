@@ -8,6 +8,7 @@ class GroupInfo extends StatefulWidget {
   final String groupId;
   final String groupName;
   final String adminName;
+
   const GroupInfo(
       {Key? key,
       required this.adminName,
@@ -21,6 +22,7 @@ class GroupInfo extends StatefulWidget {
 
 class _GroupInfoState extends State<GroupInfo> {
   Stream? members;
+
   @override
   void initState() {
     getMembers();
@@ -61,38 +63,75 @@ class _GroupInfoState extends State<GroupInfo> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text("방 나가기"),
-                        content:
-                            const Text("Are you sure you exit the group? "),
-                        actions: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.cancel,
-                              color: Colors.red,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () async {
-                              DatabaseService(
-                                      uid: FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                  .toggleGroupJoin(
-                                      widget.groupId,
-                                      getName(widget.adminName),
-                                      widget.groupName)
-                                  .whenComplete(() {
-                                nextScreenReplace(context, const HomePage());
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.done,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ],
+                        title: Text(
+                          "방 나가기",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87),
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                                height: 40,
+                                child: Text(
+                                  "정말 이 방에서 나가시겠습니까?",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black87),
+                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      DatabaseService(
+                                          uid: FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .toggleGroupJoin(
+                                          widget.groupId,
+                                          getName(widget.adminName),
+                                          widget.groupName)
+                                          .whenComplete(() {
+                                        nextScreenReplace(context, const HomePage());
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Theme.of(context).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 18),
+                                    ),
+                                    child: Text("방 나가기"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        side: BorderSide(
+                                          width: 0.5,
+                                          color:
+                                              Color.fromARGB(255, 65, 232, 201),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 18),
+                                        backgroundColor: Colors.white),
+                                    child: Text("닫기",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .primaryColor)),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       );
                     });
               },
@@ -127,13 +166,13 @@ class _GroupInfoState extends State<GroupInfo> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Group: ${widget.groupName}",
+                        "방 이름: ${widget.groupName}",
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Text("Admin: ${getName(widget.adminName)}")
+                      Text("방장 : ${getName(widget.adminName)}")
                     ],
                   )
                 ],
@@ -182,12 +221,12 @@ class _GroupInfoState extends State<GroupInfo> {
               );
             } else {
               return const Center(
-                child: Text("NO MEMBERS"),
+                child: Text("유저가 없습니다"),
               );
             }
           } else {
             return const Center(
-              child: Text("NO MEMBERS"),
+              child: Text("유저가 없습니다"),
             );
           }
         } else {
