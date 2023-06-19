@@ -1,0 +1,5 @@
+flutter clean
+
+flutter packages get
+
+flutter packages upgrade
