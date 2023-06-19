@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String password = "";
   String fullName = "";
   AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,18 +37,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
-                          "Groupie",
+                      children: [
+                        Text(
+                          "콘톡",
                           style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold),
+                              fontSize: 70,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'kbo'),
                         ),
-                        const SizedBox(height: 10),
-                        const Text(
-                            "Create your account now to chat and explore",
+                        SizedBox(height: 10),
+                        Text("로그인을 하여 여러 사람들과 대화해보세요!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
-                        Image.asset("assets/register.png"),
+                        SizedBox(height: 30),
+                        Image.asset(
+                          "assets/register.jpg",
+                          width: 350,
+                          fit: BoxFit.fill,
+                        ),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
                               labelText: "Full Name",
@@ -177,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await HelperFunctions.saveUserNameSF(fullName);
           nextScreenReplace(context, const HomePage());
         } else {
-          showSnackbar(context, Colors.red, value);
+          showSnackbar(context, Color.fromARGB(255, 65, 232, 201), value);
           setState(() {
             _isLoading = false;
           });

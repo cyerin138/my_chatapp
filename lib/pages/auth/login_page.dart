@@ -22,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   bool _isLoading = false;
   AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,31 +40,40 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      children: [
                         Text(
                           "콘톡",
                           style: TextStyle(
-                              fontSize: 70, fontWeight: FontWeight.bold,
-                            fontFamily: 'kbo'
-                          ),
+                              fontSize: 70,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'kbo'),
                         ),
                         SizedBox(height: 10),
                         Text("로그인을 하여 여러 사람들과 대화해보세요!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
                         SizedBox(height: 30),
-                        Image.asset("assets/login.jpg",
+                        Image.asset(
+                          "assets/login.jpg",
                           width: 350,
                           fit: BoxFit.fill,
                         ),
                         SizedBox(height: 50),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
-                              labelText: "Email",
-                              prefixIcon: Icon(
+                            labelText: "이메일",
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Icon(
                                 Icons.email,
                                 color: Theme.of(context).primaryColor,
-                              )),
+                              ),
+                            ),
+                              labelStyle: TextStyle(
+                                  color: Colors.grey
+                              )
+                          ),
                           onChanged: (val) {
                             setState(() {
                               email = val;
@@ -74,23 +84,29 @@ class _LoginPageState extends State<LoginPage> {
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(val!)
                                 ? null
-                                : "Please enter a valid email";
+                                : "이메일을 다시 확인해주세요.";
                           },
                         ),
                         SizedBox(height: 15),
                         TextFormField(
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
-                              enabledBorder: OutlineInputBorder(
-                              ),
-                              labelText: "Password",
-                              prefixIcon: Icon(
+                            labelText: "비밀번호",
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Icon(
                                 Icons.lock,
                                 color: Theme.of(context).primaryColor,
-                              )),
+                              ),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Colors.grey
+                            )
+                          ),
                           validator: (val) {
                             if (val!.length < 6) {
-                              return "Password must be at least 6 characters";
+                              return "비밀번호는 6글자가 넘어야합니다.";
                             } else {
                               return null;
                             }
@@ -102,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         SizedBox(
                           width: double.infinity,
@@ -112,12 +128,13 @@ class _LoginPageState extends State<LoginPage> {
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
-                              padding: EdgeInsets.all(20)
+                                padding: EdgeInsets.all(23)
                             ),
+
                             child: const Text(
                               "로그인",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                             onPressed: () {
                               login();
@@ -125,15 +142,15 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Text.rich(TextSpan(
-                          text: "Don't have an account? ",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 14),
+                          text: "계정이 없으신가요?  ",
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: "Register here",
+                                text: "회원가입",
                                 style: const TextStyle(
                                     color: Colors.black,
                                     decoration: TextDecoration.underline),
@@ -171,7 +188,6 @@ class _LoginPageState extends State<LoginPage> {
           showSnackbar(context, Color.fromARGB(255, 65, 232, 201), value);
           setState(() {
             _isLoading = false;
-
           });
         }
       });
