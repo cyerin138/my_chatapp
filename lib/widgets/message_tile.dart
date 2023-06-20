@@ -21,7 +21,7 @@ class _MessageTileState extends State<MessageTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: widget.sentByMe
           ? getSenderView(ChatBubbleClipper3(type: BubbleType.sendBubble),
               context, widget.message, widget.sender)
@@ -84,6 +84,7 @@ class _MessageTileState extends State<MessageTile> {
   getSenderView(CustomClipper clipper, BuildContext context, String text,
           String user) =>
       Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ChatBubble(
             clipper: clipper,
@@ -97,7 +98,7 @@ class _MessageTileState extends State<MessageTile> {
               child: Text(
                 text,
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
           ),
@@ -105,7 +106,7 @@ class _MessageTileState extends State<MessageTile> {
             user.toUpperCase(),
             textAlign: TextAlign.right,
             style: const TextStyle(
-                fontSize: 13,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: 5),
@@ -116,6 +117,7 @@ class _MessageTileState extends State<MessageTile> {
   getReceiverView(
           CustomClipper clipper, BuildContext, String text, String user) =>
       Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ChatBubble(
             clipper: clipper,
@@ -127,7 +129,8 @@ class _MessageTileState extends State<MessageTile> {
               ),
               child: Text(
                 text,
-                style: TextStyle(color: Colors.black),
+                textAlign: TextAlign.start,
+                style: TextStyle(fontSize: 18, color: Colors.black),
               ),
             ),
           ),
@@ -135,7 +138,7 @@ class _MessageTileState extends State<MessageTile> {
             user.toUpperCase(),
             textAlign: TextAlign.start,
             style: const TextStyle(
-                fontSize: 13,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: -0.5),
