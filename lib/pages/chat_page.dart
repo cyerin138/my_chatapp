@@ -74,11 +74,12 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           // chat messages here
           chatMessages(),
+
           Container(
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(width: 1, color: Colors.grey.shade300),
                 ),
@@ -86,7 +87,6 @@ class _ChatPageState extends State<ChatPage> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               width: MediaQuery.of(context).size.width,
-
               child: Row(children: [
                 Expanded(
                     child: TextFormField(
@@ -124,15 +124,23 @@ class _ChatPageState extends State<ChatPage> {
       stream: chats,
       builder: (context, AsyncSnapshot snapshot) {
         return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                      message: snapshot.data.docs[index]['message'],
-                      sender: snapshot.data.docs[index]['sender'],
-                      sentByMe: widget.userName ==
-                          snapshot.data.docs[index]['sender']);
-                },
+            ? SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: Column(
+                  children: [
+                    ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          return MessageTile(
+                              message: snapshot.data.docs[index]['message'],
+                              sender: snapshot.data.docs[index]['sender'],
+                              sentByMe: widget.userName ==
+                                  snapshot.data.docs[index]['sender']);
+                        })
+                  ],
+                ),
               )
             : Container();
       },
