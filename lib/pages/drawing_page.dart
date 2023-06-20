@@ -10,7 +10,11 @@ import 'package:my_chatapp/widgets/group_draw.dart';
 import 'package:path/path.dart';
 import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider_windows/path_provider_windows.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
+final gkeytemp = GlobalKey();
 
 // 점 정보 타입(클래스) 만들기
 class DotInfo {
@@ -87,9 +91,8 @@ class DrawingProvider extends ChangeNotifier {
 }
 
 class DrawingPage extends StatefulWidget {
-  final GlobalKey gkeytemp;
 
-  const DrawingPage({Key? key, required this.gkeytemp}) : super(key: key);
+  const DrawingPage({Key? key}) : super(key: key);
 
   @override
   State<DrawingPage> createState() => _DrawingPageState();
@@ -187,7 +190,7 @@ class _DrawingPageState extends State<DrawingPage> {
             ),
           ),
           RepaintBoundary(
-            key: widget.gkeytemp,
+            key: gkeytemp,
             child: Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -307,5 +310,34 @@ class DrawingPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     // TODO: implement shouldRepaint
     return true;
+  }
+}
+
+
+class ImageChange {
+
+  // 위젯 이미지로 바꾸기
+  static imageChange() async {
+    print(2222);
+    final PathProviderWindows provider = PathProviderWindows();
+    final path = join(
+        await provider.getTemporaryPath() as String,
+        '${DateTime.now()}.png'
+    );
+
+    if(gkeytemp != null) {
+      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image tempscreen = await rojecet.toImage(
+          pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
+      );
+      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
+      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
+      final File file = File(path);
+      await file.writeAsBytes(png8Byttes);
+
+    } else {
+      print("error");
+    }
+
   }
 }

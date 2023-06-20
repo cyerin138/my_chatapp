@@ -1,7 +1,3 @@
-import 'dart:io';
-import 'dart:ui' as ui;
-import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
@@ -12,9 +8,6 @@ import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/group_tile.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
 import 'package:my_chatapp/widgets/group_draw.dart';
-import 'package:path/path.dart' as Path;
-import 'package:path_provider_windows/path_provider_windows.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +27,6 @@ class _HomePageState extends State<HomePage> {
   Stream? groups;
   String groupName = "";
   bool _isLoading = false;
-  final gkeytemp = GlobalKey();
 
 
   bool _isSuccess = false;
@@ -166,7 +158,7 @@ class _HomePageState extends State<HomePage> {
           new SearchPage(),
           Column(
             children: [
-              new DrawingPage(gkeytemp: gkeytemp),
+              new DrawingPage(),
               groupListDraw()
             ],
           ),
@@ -288,29 +280,6 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  // 위젯 이미지로 바꾸기
-  imageChange() async {
-    final PathProviderWindows provider = PathProviderWindows();
-    final path = Path.join(
-        await provider.getTemporaryPath() as String,
-        '${DateTime.now()}.png'
-    );
-
-    if(gkeytemp != null) {
-      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      final ui.Image tempscreen = await rojecet.toImage(
-          pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
-      );
-      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
-      final File file = File(path);
-      await file.writeAsBytes(png8Byttes);
-
-    } else {
-      print("error");
-    }
-
-  }
 
 // 해당 유저가 입장 되어있는 방 목록
   groupList() {
@@ -354,7 +323,6 @@ class _HomePageState extends State<HomePage> {
 
 // 해당 유저가 입장 되어있는 방 목록 / 그림판
   groupListDraw() {
-    print(_groups);
     if(_groups != null) {
       if(_itemCount != 0) {
         return SingleChildScrollView(
@@ -382,7 +350,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   
-  // 만약 유저가 아무 방에도 입장해있지 않을 경우
+  // 만약 유저가 아무 방에도 입장해 있지 않을 경우
   noGroupWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25),

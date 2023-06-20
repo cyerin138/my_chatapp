@@ -1,4 +1,5 @@
 import 'package:my_chatapp/pages/chat_page.dart';
+import 'package:my_chatapp/pages/drawing_page.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,9 @@ class _GroupDrawState extends State<GroupDraw> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        await ImageChange.imageChange();
+        print(333);
         nextScreen(
             context,
             ChatPage(
@@ -30,6 +33,7 @@ class _GroupDrawState extends State<GroupDraw> {
               groupName: widget.groupName,
               userName: widget.userName,
             ));
+
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
@@ -50,7 +54,7 @@ class _GroupDrawState extends State<GroupDraw> {
             child: Text( widget.groupName, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w800)),
           ),
           subtitle: Text(
-            "${widget.userName} 님이 방에 입장 ",
+            "${widget.groupName} 방에 이모티콘 올리기 ",
             style: const TextStyle(fontSize: 13),
           ),
           trailing: Icon(
