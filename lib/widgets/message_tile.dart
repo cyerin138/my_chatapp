@@ -35,22 +35,24 @@ class _MessageTileState extends State<MessageTile> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: Text(
-              user.toUpperCase(),
-              textAlign: TextAlign.end,
-              style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+          Align(
+            alignment: FractionalOffset.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 10, 5),
+              child: Text(
+                user.toUpperCase(),
+                textAlign: TextAlign.end,
+                style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                ),
               ),
             ),
           ),
           ChatBubble(
             clipper: clipper,
             alignment: Alignment.topRight,
-            margin: EdgeInsets.only(top: 20),
             backGroundColor: Theme.of(context).primaryColor,
             child: Container(
               constraints: BoxConstraints(
@@ -73,7 +75,7 @@ class _MessageTileState extends State<MessageTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            padding: const EdgeInsets.fromLTRB(10, 20, 0, 5),
             child: Text(
               user.toUpperCase(),
               textAlign: TextAlign.start,
@@ -87,7 +89,6 @@ class _MessageTileState extends State<MessageTile> {
           ChatBubble(
             clipper: clipper,
             backGroundColor: Color(0xffE7E7ED),
-            margin: EdgeInsets.only(top: 20),
             child: Container(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.7,
