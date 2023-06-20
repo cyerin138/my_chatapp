@@ -330,7 +330,7 @@ class ImageChange {
 
   // 위젯 이미지로 바꾸기
   static imageChange(Uint8List? bytes) {
-    return base64Encode(bytes as Uint8List).substring(0, base64Encode(bytes as Uint8List).indexOf("/"));
+    return base64Encode(bytes as Uint8List);
   }
 
 
