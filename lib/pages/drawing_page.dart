@@ -155,7 +155,7 @@ class _DrawingPageState extends State<DrawingPage> {
                 width: double.infinity,
                 child: Stack(
                   children: [
-                    Positioned.(
+                    Positioned.fill(
                         child: CustomPaint(
                       painter: DrawingPainter(p.lines),
                     )),
@@ -214,8 +214,8 @@ class _DrawingPageState extends State<DrawingPage> {
                         backgroundColor: Colors.white),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      var p = Provider.of<DrawingProvider>(context);
                       setState(() {
-                        var p = Provider.of<DrawingProvider>(context);
                         p.changeColor = pickerColor;
                         currentColor = pickerColor;
                       });
