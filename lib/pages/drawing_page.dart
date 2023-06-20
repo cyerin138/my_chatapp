@@ -102,13 +102,20 @@ class _DrawingPageState extends State<DrawingPage> {
                     onPressed: () {
                       colorDialog(context);
                     },
-                    child: Text("ColorPicker")),
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        backgroundColor: Theme.of(context).primaryColor),
+                    child: Text(
+                      "ColorPicker",
+                      style: TextStyle(color: Colors.white),
+                    )),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 5),
                     child: Slider(
-                      activeColor: Colors.white,
-                      inactiveColor: Colors.white,
+                      activeColor: Theme.of(context).primaryColor,
+                      inactiveColor: Colors.grey[300],
                       value: p.size,
                       onChanged: (size) {
                         p.changeSize = size;
@@ -123,13 +130,10 @@ class _DrawingPageState extends State<DrawingPage> {
                   onTap: () {
                     p.changeEraseMode();
                   },
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 25),
-                    child: Icon(
-                      Icons.delete,
-                      color:p.eraseMode ?  Colors.black : Colors.grey ,
-                      size: 40,
-                    ),
+                  child: Icon(
+                    Icons.delete,
+                    color: p.eraseMode ? Colors.black : Colors.grey,
+                    size: 40,
                   ),
                 )
               ],
@@ -196,6 +200,7 @@ class _DrawingPageState extends State<DrawingPage> {
             title: const Text('ColorPicker'),
             content: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ColorPicker(
                     pickerColor: pickerColor,
