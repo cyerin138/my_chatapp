@@ -20,17 +20,13 @@ class MessageTile extends StatefulWidget {
 class _MessageTileState extends State<MessageTile> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Container(
-          child: widget.sentByMe
-              ? getSenderView(ChatBubbleClipper3(type: BubbleType.sendBubble),
-                  context, widget.message, widget.sender)
-              : getReceiverView(
-                  ChatBubbleClipper3(type: BubbleType.receiverBubble),
-                  context,
-                  widget.message,
-                  widget.sender)),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: widget.sentByMe
+          ? getSenderView(ChatBubbleClipper3(type: BubbleType.sendBubble),
+              context, widget.message, widget.sender)
+          : getReceiverView(ChatBubbleClipper3(type: BubbleType.receiverBubble),
+              context, widget.message, widget.sender),
     );
     // return Container(
     //
@@ -141,7 +137,7 @@ class _MessageTileState extends State<MessageTile> {
             style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color:  Colors.black,
+                color: Colors.black,
                 letterSpacing: -0.5),
           ),
         ],
