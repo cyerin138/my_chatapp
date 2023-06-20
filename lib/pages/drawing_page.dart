@@ -214,7 +214,7 @@ class _DrawingPageState extends State<DrawingPage> {
                         backgroundColor: Colors.white),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      var p = Provider.of<DrawingProvider>(context);
+                      var p = Provider.of<DrawingProvider>(context, listen: false);
                       setState(() {
                         p.changeColor = pickerColor;
                         currentColor = pickerColor;
