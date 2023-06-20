@@ -1,10 +1,12 @@
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
+import 'package:my_chatapp/pages/drawing_page.dart';
 import 'package:my_chatapp/pages/home_page.dart';
 import 'package:my_chatapp/shared/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,14 +53,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          primaryColor: Constants().primaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: 'kbo'
+    return ListenableProvider(
+      create: (context) => DrawingProvider(),
+      child: MaterialApp(
+        theme: ThemeData(
+            primaryColor: Constants().primaryColor,
+            scaffoldBackgroundColor: Colors.white,
+            fontFamily: 'kbo'),
+        debugShowCheckedModeBanner: false,
+        home: _isSignedIn ? const HomePage() : const LoginPage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const HomePage() : const LoginPage(),
     );
   }
 }

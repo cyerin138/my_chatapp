@@ -37,6 +37,7 @@ flutter run -d chrome
 
 500 / 959 => 첫화면에서 1920 ,1080 기준 위로 다 차지하게끔
 
+
 //---------------------------
 gradle wrapper --gradle-version 7.5.1
 
