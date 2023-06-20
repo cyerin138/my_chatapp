@@ -106,6 +106,7 @@ class _DrawingPageState extends State<DrawingPage> {
                 ElevatedButton(
                     onPressed: () {
                       colorDialog(context);
+                      p.changeEraseMode();
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
@@ -182,6 +183,7 @@ class _DrawingPageState extends State<DrawingPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         p.changeColor = color;
+
       },
       child: Container(
         width: 50,
