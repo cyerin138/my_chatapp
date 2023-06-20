@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                   size: 30,
                 ),
               ),
-              label: '임티',
+              label: '이모티콘',
             ),
             BottomNavigationBarItem(
               icon: Padding(
