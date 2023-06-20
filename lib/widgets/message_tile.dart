@@ -35,14 +35,17 @@ class _MessageTileState extends State<MessageTile> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            user.toUpperCase(),
-            textAlign: TextAlign.right,
-            style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Text(
+              user.toUpperCase(),
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+              ),
+            ),
           ),
           ChatBubble(
             clipper: clipper,
@@ -69,14 +72,17 @@ class _MessageTileState extends State<MessageTile> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            user.toUpperCase(),
-            textAlign: TextAlign.start,
-            style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: -0.5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            child: Text(
+              user.toUpperCase(),
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+),
+            ),
           ),
           ChatBubble(
             clipper: clipper,
