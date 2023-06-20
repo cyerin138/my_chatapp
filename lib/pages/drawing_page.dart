@@ -5,6 +5,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:my_chatapp/service/auth_service.dart';
+import 'package:my_chatapp/widgets/group_draw.dart';
 import 'package:path/path.dart';
 import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
@@ -89,7 +91,21 @@ class _DrawingPageState extends State<DrawingPage> {
   Color currentColor = Color(0xff443a49);
   final gkeytemp = GlobalKey();
 
-// ValueChanged<Color> callback
+  String userName = "";
+  String email = "";
+  AuthService authService = AuthService();
+  Stream? groups;
+  bool _isLoading = false;
+  String groupName = "";
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf("_") + 1);
+  }
+
   void changeColor(Color color) {
     setState(() => pickerColor = color);
   }
@@ -199,10 +215,12 @@ class _DrawingPageState extends State<DrawingPage> {
                   )),
             ),
           ),
+          groupList()
         ],
       ),
     );
   }
+
 
   imageChange() async {
     final PathProviderWindows provider = PathProviderWindows();
@@ -225,6 +243,60 @@ class _DrawingPageState extends State<DrawingPage> {
       print("error");
     }
 
+  }
+
+  groupList() {
+    return StreamBuilder(
+      stream: groups,
+      builder: (context, AsyncSnapshot snapshot) {
+        // make some checks
+        if (snapshot.hasData) {
+          if (snapshot.data['groups'] != null) {
+            if (snapshot.data['groups'].length != 0) {
+              return ListView.builder(
+                itemCount: snapshot.data['groups'].length,
+                itemBuilder: (context, index) {
+                  int reverseIndex = snapshot.data['groups'].length - index - 1;
+                  return GroupDraw(
+                      groupId: getId(snapshot.data['groups'][reverseIndex]),
+                      groupName: getName(snapshot.data['groups'][reverseIndex]),
+                      userName: snapshot.data['fullName']);
+                },
+              );
+            } else {
+              return noGroupWidget();
+            }
+          } else {
+            return noGroupWidget();
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor),
+          );
+        }
+      },
+    );
+  }
+
+  noGroupWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 280,
+            child: Text(
+              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 생성하거나 방 검색에서 방에 입장해보세요!",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, color: Colors.grey, height: 1.4),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
 
