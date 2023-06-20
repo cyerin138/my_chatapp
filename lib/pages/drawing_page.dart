@@ -176,26 +176,6 @@ class _DrawingPageState extends State<DrawingPage> {
     );
   }
 
-  Widget _colorWidget(Color color) {
-    var p = Provider.of<DrawingProvider>(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        p.changeColor = color;
-      },
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: p.color == color
-                ? Border.all(color: Colors.white, width: 4)
-                : null,
-            color: color),
-      ),
-    );
-  }
-
   colorDialog(BuildContext context) {
     showDialog(
         barrierDismissible: false,
@@ -226,9 +206,11 @@ class _DrawingPageState extends State<DrawingPage> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       setState(() {
-                        _colorWidget(pickerColor);
+                        var p = Provider.of<DrawingProvider>(context);
+                        p.changeColor = pickerColor;
                         currentColor = pickerColor;
                       });
+
                     },
                   ),
                 ],
