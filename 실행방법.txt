@@ -17,7 +17,18 @@ flutter packages get
 
 flutter packages upgrade
 
+4) chrome 으로 실행 해주세요!! (에뮬레이터 아마 버전 문제로 계속 오류나서 포기...)
+창 크기 :
+500 , 959 => 첫화면에서 1920 ,1080 기준 세로로 다 차지하는 비율로 제작했어요 이 비율로 봐주세요
 
+5)
+여러개 화면을 띄우고 싶을땐 이걸 터미널에 입력해주세요!
+flutter run -d chrome
+
+
+%%%% 이렇게 돌렸는데 흰 화면이 뜨거나 안돌아가면 밑에 사항을 참고해주세요!!
+
+% 안 돌아갈때
 
 flutter doctor
 
@@ -28,17 +39,16 @@ android sdk command-line tools, android sdk platform-tools, (밑에 hide obsolet
 flutter doctor --android-licenses
 
 
+% 흰 화면 일때
 
 flutter channel master
 flutter upgrade
-
 flutter clean
 flutter channel master
 flutter upgrade --force
-
 flutter pub get
 
-flutter run -d chrome
 
 
-500 / 959 => 첫화면에서 1920 ,1080 기준 위로 다 차지하게끔
+
+
