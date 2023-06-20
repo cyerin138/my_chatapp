@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.8.1
   shared_preferences: ^2.1.2
   flutter_chat_bubble: ^2.0.2
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
