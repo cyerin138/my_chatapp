@@ -94,7 +94,12 @@ class _DrawingPageState extends State<DrawingPage> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 1, color: Colors.grey.shade300),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -207,7 +212,16 @@ class _DrawingPageState extends State<DrawingPage> {
                     onColorChanged: changeColor,
                   ),
                   ElevatedButton(
-                    child: const Text('확인'),
+                    child: Text('확인',style: TextStyle(
+                    color: Theme.of(context).primaryColor)),
+                    style: ElevatedButton.styleFrom(
+                        side: BorderSide(
+                          width: 0.5,
+                          color: Color.fromARGB(255, 65, 232, 201),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 18),
+                        backgroundColor: Colors.white),
                     onPressed: () {
                       Navigator.of(context).pop();
                       setState(() {
