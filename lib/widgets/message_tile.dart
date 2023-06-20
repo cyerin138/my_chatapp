@@ -43,7 +43,7 @@ class _MessageTileState extends State<MessageTile> {
               style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.black54,
               ),
             ),
           ),
@@ -79,7 +79,7 @@ class _MessageTileState extends State<MessageTile> {
               style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.black54,
 ),
             ),
           ),
