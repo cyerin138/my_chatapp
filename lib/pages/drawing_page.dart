@@ -94,67 +94,44 @@ class _DrawingPageState extends State<DrawingPage> {
       child: Column(
         children: [
           Container(
-            color: Colors.grey[900],
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            padding: EdgeInsets.only(top: 20, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // _colorWidget(Colors.black),
-                      // _colorWidget(Colors.red),
-                      // _colorWidget(Colors.yellow),
-                      // _colorWidget(Colors.green),
-                      // _colorWidget(Colors.blue),
-                      ElevatedButton(
-                          onPressed: () {
-                            colorDialog(context);
-                          },
-                          child: Text("ColorPicker"))
-                    ],
+                ElevatedButton(
+                    onPressed: () {
+                      colorDialog(context);
+                    },
+                    child: Text("ColorPicker")),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, right: 5),
+                    child: Slider(
+                      activeColor: Colors.white,
+                      inactiveColor: Colors.white,
+                      value: p.size,
+                      onChanged: (size) {
+                        p.changeSize = size;
+                      },
+                      min: 3,
+                      max: 15,
+                    ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20, right: 5),
-                        child: Slider(
-                          activeColor: Colors.white,
-                          inactiveColor: Colors.white,
-                          value: p.size,
-                          onChanged: (size) {
-                            p.changeSize = size;
-                          },
-                          min: 3,
-                          max: 15,
-                        ),
-                      ),
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    p.changeEraseMode();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 25),
+                    child: Icon(
+                      Icons.delete,
+                      color:p.eraseMode ?  Colors.black : Colors.grey ,
+                      size: 40,
                     ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        p.changeEraseMode();
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 25),
-                        child: Text(
-                          '지우개',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: p.eraseMode
-                                  ? FontWeight.w900
-                                  : FontWeight.w300),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                )
               ],
             ),
           ),
@@ -227,11 +204,11 @@ class _DrawingPageState extends State<DrawingPage> {
                   ElevatedButton(
                     child: const Text('확인'),
                     onPressed: () {
+                      Navigator.of(context).pop();
                       setState(() {
                         _colorWidget(pickerColor);
                         currentColor = pickerColor;
                       });
-                      Navigator.of(context).pop();
                     },
                   ),
                 ],
