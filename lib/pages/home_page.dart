@@ -354,18 +354,27 @@ class _HomePageState extends State<HomePage> {
 
 // 해당 유저가 입장 되어있는 방 목록 / 그림판
   groupListDraw() {
-    print(333);
+    print(_groups);
     if(_groups != null) {
       if(_itemCount != 0) {
-        return ListView.builder(
-          itemCount: _itemCount,
-          itemBuilder: (context, index) {
-            int reverseIndex = _itemCount - index - 1;
-            return GroupDraw(
-                groupId: getId(_groups[reverseIndex]),
-                groupName: getName(_groups[reverseIndex]),
-                userName: _userName);
-          },
+        return SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: _itemCount,
+                itemBuilder: (context, index) {
+                  int reverseIndex = _itemCount - index - 1;
+                  return GroupDraw(
+                      groupId: getId(_groups[reverseIndex]),
+                      groupName: getName(_groups[reverseIndex]),
+                      userName: _userName);
+                },
+              ),
+            ],
+          ),
         );
       }
     }
