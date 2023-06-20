@@ -1,7 +1,11 @@
-C:\dev\src\flutter\bin
-환경변수
+
+실행방법이에요!!!
+학교 컴퓨터랑 집 컴퓨터랑 버전 차이라던지 패키지 다운이라던지 필요해서 준비했어요!!
 
 
+[학교 컴퓨터 기준]
+1) 환경변수 에서 path를 누른다음 편집을 눌러 C:\dev\src\flutter\bin 를 추가해주세요! ( 학교 컴퓨터에 환경변수가 적용이 안되어있더라구요)
+2) 다음 명령어 들을 차례로 터미널에서 돌려주세요
 flutter clean
 
 flutter upgrade
@@ -12,9 +16,10 @@ flutter packages get
 
 flutter packages upgrade
 
+
+
 flutter doctor
 
-여러 오류
 tools > sdk manager > sdk tools
 
 android sdk command-line tools, android sdk platform-tools, (밑에 hide obsolete packages 풀고) Android sdk tools (obsolete) 세개 체크
