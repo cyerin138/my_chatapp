@@ -129,24 +129,27 @@ class _ChatPageState extends State<ChatPage> {
       stream: chats,
       builder: (context, AsyncSnapshot snapshot) {
         return snapshot.hasData
-            ? SingleChildScrollView(
-                physics: ScrollPhysics(),
-                child: Column(
-                  children: [
-                    ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          return MessageTile(
-                              message: snapshot.data.docs[index]['message'],
-                              sender: snapshot.data.docs[index]['sender'],
-                              sentByMe: widget.userName ==
-                                  snapshot.data.docs[index]['sender']);
-                        })
-                  ],
+            ? Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+              child: SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) {
+                            return MessageTile(
+                                message: snapshot.data.docs[index]['message'],
+                                sender: snapshot.data.docs[index]['sender'],
+                                sentByMe: widget.userName ==
+                                    snapshot.data.docs[index]['sender']);
+                          })
+                    ],
+                  ),
                 ),
-              )
+            )
             : Container();
       },
     );
