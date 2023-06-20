@@ -58,8 +58,10 @@ class DrawingProvider extends ChangeNotifier {
   }
 
   void drawing(Offset offset) {
-    lines.last.add(DotInfo(offset, size, color));
-    notifyListeners();
+    if(Offset(0, 0) < offset && offset < Offset(500, 500)) {
+      lines.last.add(DotInfo(offset, size, color));
+      notifyListeners();
+    }
   }
 
   void erase(Offset offset) {
@@ -95,7 +97,6 @@ class _DrawingPageState extends State<DrawingPage> {
   String email = "";
   AuthService authService = AuthService();
   Stream? groups;
-  bool _isLoading = false;
   String groupName = "";
 
   String getId(String res) {
@@ -215,7 +216,7 @@ class _DrawingPageState extends State<DrawingPage> {
                   )),
             ),
           ),
-          groupList()
+          // groupList()
         ],
       ),
     );

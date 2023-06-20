@@ -52,6 +52,11 @@ class _GroupDrawState extends State<GroupDraw> {
             "${widget.userName} 님이 방에 입장 ",
             style: const TextStyle(fontSize: 13),
           ),
+          trailing: Icon(
+            Icons.send,
+            color: Theme.of(context).primaryColor,
+            size: 30,
+          ),
         ),
       ),
     );
