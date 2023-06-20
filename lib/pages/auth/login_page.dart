@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
           nextScreenReplace(context, const HomePage());
         } else {
-          showSnackbar(context, Color.fromARGB(255, 65, 232, 201), value);
+          showSnackbar(context, Colors.red, '이메일과 비밀번호를 다시 확인해주세요.');
           setState(() {
             _isLoading = false;
           });

@@ -200,7 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await HelperFunctions.saveUserNameSF(fullName);
           nextScreenReplace(context, const HomePage());
         } else {
-          showSnackbar(context, Color.fromARGB(255, 65, 232, 201), value);
+          showSnackbar(context, Colors.red, "다른 계정이 존재하는 이메일입니다.");
           setState(() {
             _isLoading = false;
           });

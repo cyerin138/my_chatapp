@@ -68,6 +68,7 @@ class _SearchPageState extends State<SearchPage> {
                         hintText: "방 검색하기",
                         hintStyle:
                             TextStyle(color: Colors.grey, fontSize: 18)),
+
                   ),
                 ),
                 GestureDetector(

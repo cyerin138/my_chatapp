@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:my_chatapp/pages/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -136,10 +137,18 @@ class _DrawingPageState extends State<DrawingPage> {
                   onTap: () {
                     p.changeEraseMode();
                   },
-                  child: Icon(
-                    Icons.delete,
-                    color: p.eraseMode ? Colors.black : Colors.grey,
-                    size: 40,
+                  child: SizedBox(
+                    width: 80,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: p.eraseMode ? Colors.black : Colors.grey,
+                          size: 40,
+                        ),
+                        Text(p.eraseMode ? "on" : "off", style: TextStyle( color: p.eraseMode ? Colors.black : Colors.grey, fontWeight: FontWeight.w600, fontSize: 18),)
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -185,6 +194,7 @@ class _DrawingPageState extends State<DrawingPage> {
       ),
     );
   }
+
 
   colorDialog(BuildContext context) {
     showDialog(
