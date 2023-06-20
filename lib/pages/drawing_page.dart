@@ -22,8 +22,8 @@ class _DrawingPageState extends State<DrawingPage> {
   @override
   Widget build(BuildContext context) {
     var p = Provider.of<DrawingProvider>(context);
-    return Scaffold(
-      body: Column(
+    return Container(
+      child: Column(
         children: [
           Expanded(
               child: Stack(
@@ -143,8 +143,8 @@ class DrawingPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
     for(var oneLine in lines){
-      Color color;
-      double size;
+      Color? color;
+      double? size;
       var l = <Offset>[];
       var p = Path();
       for(var oneDot in oneLine){
@@ -153,7 +153,7 @@ class DrawingPainter extends CustomPainter{
         l.add(oneDot.offset);
       }
       p.addPolygon(l, false);
-      canvas.drawPath(p, Paint()..color = color..strokeWidth=size..strokeCap=StrokeCap.round..style=PaintingStyle.stroke);
+      canvas.drawPath(p, Paint()..color = color as Color ..strokeWidth=size as double ..strokeCap=StrokeCap.round..style=PaintingStyle.stroke);
     }
   }
 
