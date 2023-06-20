@@ -82,11 +82,6 @@ class _DrawingPageState extends State<DrawingPage> {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
 
-  static const _kFontFam = 'MyFlutterApp';
-  static const String? _kFontPkg = null;
-
-  static const IconData eraser = IconData(0xf12d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-
 // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -187,7 +182,6 @@ class _DrawingPageState extends State<DrawingPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         p.changeColor = color;
-
       },
       child: Container(
         width: 50,
@@ -218,8 +212,9 @@ class _DrawingPageState extends State<DrawingPage> {
                     onColorChanged: changeColor,
                   ),
                   ElevatedButton(
-                    child: Text('확인',style: TextStyle(
-                    color: Theme.of(context).primaryColor)),
+                    child: Text('확인',
+                        style:
+                            TextStyle(color: Theme.of(context).primaryColor)),
                     style: ElevatedButton.styleFrom(
                         side: BorderSide(
                           width: 0.5,
