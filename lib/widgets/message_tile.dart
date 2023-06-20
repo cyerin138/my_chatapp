@@ -35,18 +35,15 @@ class _MessageTileState extends State<MessageTile> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Align(
-            alignment: FractionalOffset.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 10, 5),
-              child: Text(
-                user.toUpperCase(),
-                textAlign: TextAlign.end,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 20, 10, 5),
+            child: Text(
+              user.toUpperCase(),
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
               ),
             ),
           ),
