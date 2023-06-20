@@ -32,9 +32,18 @@ class _HomePageState extends State<HomePage> {
   String email = "";
   AuthService authService = AuthService();
   Stream? groups;
-  bool _isLoading = false;
   String groupName = "";
+  bool _isLoading = false;
   final gkeytemp = GlobalKey();
+
+
+  bool _isSuccess = false;
+
+  int _itemCount = 0;
+  var _groups;
+  var _userName ;
+
+
 
   @override
   void initState() {
@@ -155,7 +164,12 @@ class _HomePageState extends State<HomePage> {
         child: [
           groupList(),
           new SearchPage(),
-          new DrawingPage(gkeytemp: gkeytemp),
+          Column(
+            children: [
+              new DrawingPage(gkeytemp: gkeytemp),
+              groupListDraw()
+            ],
+          ),
           userProfile()
         ].elementAt(_selectedIndex),
       ),
@@ -307,6 +321,10 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.hasData) {
           if (snapshot.data['groups'] != null) {
             if (snapshot.data['groups'].length != 0) {
+              _isSuccess = true;
+              _itemCount = snapshot.data['groups'].length;
+              _groups = snapshot.data['groups'];
+              _userName = snapshot.data['fullName'];
               return ListView.builder(
                 itemCount: snapshot.data['groups'].length,
                 itemBuilder: (context, index) {
@@ -331,6 +349,27 @@ class _HomePageState extends State<HomePage> {
         }
       },
     );
+  }
+
+
+// 해당 유저가 입장 되어있는 방 목록 / 그림판
+  groupListDraw() {
+    print(333);
+    if(_groups != null) {
+      if(_itemCount != 0) {
+        return ListView.builder(
+          itemCount: _itemCount,
+          itemBuilder: (context, index) {
+            int reverseIndex = _itemCount - index - 1;
+            return GroupDraw(
+                groupId: getId(_groups[reverseIndex]),
+                groupName: getName(_groups[reverseIndex]),
+                userName: _userName);
+          },
+        );
+      }
+    }
+    return Container();
   }
 
   
