@@ -1,6 +1,7 @@
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
 import 'package:my_chatapp/pages/search_page.dart';
+import 'package:my_chatapp/pages/drawing_page.dart';
 import 'package:my_chatapp/service/auth_service.dart';
 import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/group_tile.dart';
@@ -142,13 +143,11 @@ class _HomePageState extends State<HomePage> {
         child: [
           groupList(),
           new SearchPage(),
-          Text(
-            '이모티콘 입주예정',
-          ),
+          new DrawingPage(),
           userProfile()
         ].elementAt(_selectedIndex),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _selectedIndex == 0 ?  FloatingActionButton(
         onPressed: () {
           popUpDialog(context);
         },
@@ -159,7 +158,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
           size: 30,
         ),
-      ),
+      ) : null,
     );
   }
 
@@ -261,6 +260,7 @@ class _HomePageState extends State<HomePage> {
           }));
         });
   }
+
 
   groupList() {
     return StreamBuilder(
