@@ -82,6 +82,11 @@ class _DrawingPageState extends State<DrawingPage> {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
 
+  static const _kFontFam = 'MyFlutterApp';
+  static const String? _kFontPkg = null;
+
+  static const IconData eraser = IconData(0xf12d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
 // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -106,7 +111,6 @@ class _DrawingPageState extends State<DrawingPage> {
                 ElevatedButton(
                     onPressed: () {
                       colorDialog(context);
-                      p.changeEraseMode();
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
