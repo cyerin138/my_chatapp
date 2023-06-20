@@ -13,84 +13,10 @@ import 'package:provider/provider.dart';
 import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-final gkeytemp = GlobalKey();
-
-// 점 정보 타입(클래스) 만들기
-class DotInfo {
-  DotInfo(this.offset, this.size, this.color);
-
-  final Offset offset;
-  final double size;
-  final Color color;
-}
-
-// 처음 세팅과 그릴때 쓰이는 함수들 
-class DrawingProvider extends ChangeNotifier {
-  final lines = <List<DotInfo>>[];
-
-  double _size = 3;
-
-  double get size => _size;
-
-  set changeSize(double size) {
-    _size = size;
-    notifyListeners();
-  }
-
-  Color _color = Colors.black;
-
-  Color get color => _color;
-
-  set changeColor(Color color) {
-    _color = color;
-    notifyListeners();
-  }
-
-  bool _eraseMode = false;
-
-  bool get eraseMode => _eraseMode;
-
-  // 지우개 on/off 바꾸기
-  void changeEraseMode() {
-    _eraseMode = !_eraseMode;
-    notifyListeners();
-  }
-
-  // 그림 그리기
-  void drawStart(Offset offset) {
-    var oneLine = <DotInfo>[];
-    oneLine.add(DotInfo(offset, size, color));
-    lines.add(oneLine);
-    notifyListeners();
-  }
-
-  // 그림 그릴때 / 공간 설정
-  void drawing(Offset offset) {
-    if(Offset(0, 0) < offset && offset < Offset(500, 500)) {
-      lines.last.add(DotInfo(offset, size, color));
-      notifyListeners();
-    }
-  }
-
-  // 지우개 
-  void erase(Offset offset) {
-    final eraseGap = 15;
-    for (var oneLine in List<List<DotInfo>>.from(lines)) {
-      for (var oneDot in oneLine) {
-        if (sqrt(pow((offset.dx - oneDot.offset.dx), 2) +
-                pow((offset.dy - oneDot.offset.dy), 2)) <
-            eraseGap) {
-          lines.remove(oneLine);
-          break;
-        }
-      }
-    }
-    notifyListeners();
-  }
-}
+import 'package:widgets_to_image/widgets_to_image.dart';
 
 class DrawingPage extends StatefulWidget {
+  static Uint8List? bytes;
 
   const DrawingPage({Key? key}) : super(key: key);
 
@@ -98,10 +24,13 @@ class DrawingPage extends StatefulWidget {
   State<DrawingPage> createState() => _DrawingPageState();
 }
 
+WidgetsToImageController controller = WidgetsToImageController();
+
 class _DrawingPageState extends State<DrawingPage> {
   // 초기 값 세팅
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
+
 
 
   //요소 세팅
@@ -181,7 +110,13 @@ class _DrawingPageState extends State<DrawingPage> {
                           color: p.eraseMode ? Colors.black : Colors.grey,
                           size: 40,
                         ),
-                        Text(p.eraseMode ? "on" : "off", style: TextStyle( color: p.eraseMode ? Colors.black : Colors.grey, fontWeight: FontWeight.w600, fontSize: 18),)
+                        Text(
+                          p.eraseMode ? "on" : "off",
+                          style: TextStyle(
+                              color: p.eraseMode ? Colors.black : Colors.grey,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18),
+                        )
                       ],
                     ),
                   ),
@@ -189,8 +124,8 @@ class _DrawingPageState extends State<DrawingPage> {
               ],
             ),
           ),
-          RepaintBoundary(
-            key: gkeytemp,
+          WidgetsToImage(
+            controller: controller,
             child: Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -228,14 +163,11 @@ class _DrawingPageState extends State<DrawingPage> {
                   )),
             ),
           ),
-          // groupList()
+          if (DrawingPage.bytes != null) buildImage(DrawingPage.bytes!),
         ],
       ),
     );
   }
-
-
-
 
 // colorpicker 모달창
   colorDialog(BuildContext context) {
@@ -267,7 +199,8 @@ class _DrawingPageState extends State<DrawingPage> {
                         backgroundColor: Colors.white),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      var p = Provider.of<DrawingProvider>(context, listen: false);
+                      var p =
+                          Provider.of<DrawingProvider>(context, listen: false);
                       setState(() {
                         p.changeColor = pickerColor;
                         currentColor = pickerColor;
@@ -301,8 +234,13 @@ class DrawingPainter extends CustomPainter {
         l.add(oneDot.offset);
       }
       p.addPolygon(l, false);
-      canvas.drawPath(p, Paint() ..color = color as Color ..strokeWidth = size as double
-        ..strokeCap = StrokeCap.round ..style = PaintingStyle.stroke);
+      canvas.drawPath(
+          p,
+          Paint()
+            ..color = color as Color
+            ..strokeWidth = size as double
+            ..strokeCap = StrokeCap.round
+            ..style = PaintingStyle.stroke);
     }
   }
 
@@ -313,31 +251,78 @@ class DrawingPainter extends CustomPainter {
   }
 }
 
+// 점 정보 타입(클래스) 만들기
+class DotInfo {
+  DotInfo(this.offset, this.size, this.color);
 
-class ImageChange {
+  final Offset offset;
+  final double size;
+  final Color color;
+}
 
-  // 위젯 이미지로 바꾸기
-  static imageChange() async {
-    print(2222);
-    final PathProviderWindows provider = PathProviderWindows();
-    final path = join(
-        await provider.getTemporaryPath() as String,
-        '${DateTime.now()}.png'
-    );
+// 처음 세팅과 그릴때 쓰이는 함수들
+class DrawingProvider extends ChangeNotifier {
+  final lines = <List<DotInfo>>[];
 
-    if(gkeytemp != null) {
-      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      final ui.Image tempscreen = await rojecet.toImage(
-          pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
-      );
-      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
-      final File file = File(path);
-      await file.writeAsBytes(png8Byttes);
+  double _size = 3;
 
-    } else {
-      print("error");
+  double get size => _size;
+
+  set changeSize(double size) {
+    _size = size;
+    notifyListeners();
+  }
+
+  Color _color = Colors.black;
+
+  Color get color => _color;
+
+  set changeColor(Color color) {
+    _color = color;
+    notifyListeners();
+  }
+
+  bool _eraseMode = false;
+
+  bool get eraseMode => _eraseMode;
+
+  // 지우개 on/off 바꾸기
+  void changeEraseMode() {
+    _eraseMode = !_eraseMode;
+    notifyListeners();
+  }
+
+  // 그림 그리기
+  void drawStart(Offset offset) {
+    var oneLine = <DotInfo>[];
+    oneLine.add(DotInfo(offset, size, color));
+    lines.add(oneLine);
+    notifyListeners();
+  }
+
+  // 그림 그릴때 / 공간 설정
+  void drawing(Offset offset) {
+    if (Offset(0, 0) < offset && offset < Offset(500, 500)) {
+      lines.last.add(DotInfo(offset, size, color));
+      notifyListeners();
     }
+  }
 
+  // 지우개
+  void erase(Offset offset) {
+    final eraseGap = 15;
+    for (var oneLine in List<List<DotInfo>>.from(lines)) {
+      for (var oneDot in oneLine) {
+        if (sqrt(pow((offset.dx - oneDot.offset.dx), 2) +
+                pow((offset.dy - oneDot.offset.dy), 2)) <
+            eraseGap) {
+          lines.remove(oneLine);
+          break;
+        }
+      }
+    }
+    notifyListeners();
   }
 }
+
+Widget buildImage(Uint8List bytes) => Image.memory(bytes);
