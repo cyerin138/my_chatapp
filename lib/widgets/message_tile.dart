@@ -104,7 +104,7 @@ class _MessageTileState extends State<MessageTile> {
           ),
           Text(
             user.toUpperCase(),
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.right,
             style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
