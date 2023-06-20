@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:my_chatapp/pages/home_page.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path/path.dart';
+import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -82,6 +87,7 @@ class _DrawingPageState extends State<DrawingPage> {
   // create some values
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
+  final gkeytemp = GlobalKey();
 
 // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -154,46 +160,73 @@ class _DrawingPageState extends State<DrawingPage> {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1, color: Colors.grey.shade300),
-                ),
-                color: Colors.white),
-            child: SizedBox(
-                height: 500,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                        child: CustomPaint(
-                      painter: DrawingPainter(p.lines),
-                    )),
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onPanStart: (s) {
-                        if (p.eraseMode) {
-                          p.erase(s.localPosition);
-                        } else {
-                          p.drawStart(s.localPosition);
-                        }
-                      },
-                      onPanUpdate: (s) {
-                        if (p.eraseMode) {
-                          p.erase(s.localPosition);
-                        } else {
-                          p.drawing(s.localPosition);
-                        }
-                      },
-                      child: Container(),
-                    ),
-                  ],
-                )),
+          RepaintBoundary(
+            key: gkeytemp,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey.shade300),
+                  ),
+                  color: Colors.white),
+              child: SizedBox(
+                  height: 500,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                          child: CustomPaint(
+                        painter: DrawingPainter(p.lines),
+                      )),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onPanStart: (s) {
+                          if (p.eraseMode) {
+                            p.erase(s.localPosition);
+                          } else {
+                            p.drawStart(s.localPosition);
+                          }
+                        },
+                        onPanUpdate: (s) {
+                          if (p.eraseMode) {
+                            p.erase(s.localPosition);
+                          } else {
+                            p.drawing(s.localPosition);
+                          }
+                        },
+                        child: Container(),
+                      ),
+                    ],
+                  )),
+            ),
           ),
         ],
       ),
     );
   }
+
+  imageChange() async {
+    final PathProviderWindows provider = PathProviderWindows();
+    final path = join(
+        await provider.getTemporaryPath() as String,
+      '${DateTime.now()}.png'
+    );
+
+    if(gkeytemp != null) {
+      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image tempscreen = await rojecet.toImage(
+        pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
+      );
+      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
+      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
+      final File file = File(path);
+      await file.writeAsBytes(png8Byttes);
+
+    } else {
+      print("error");
+    }
+
+  }
+
 
 
   colorDialog(BuildContext context) {
