@@ -1,5 +1,6 @@
 import 'package:my_chatapp/pages/chat_page.dart';
 import 'package:my_chatapp/pages/drawing_page.dart';
+import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -26,11 +27,16 @@ class _GroupDrawState extends State<GroupDraw> {
     return GestureDetector(
       onTap: () async {
         final bytes = await controller.capture();
+        Map<String, dynamic> chatMessageMap = {
+          "message": ImageChange.imageChange(bytes),
+          "sender": widget.userName,
+          "time": DateTime.now().millisecondsSinceEpoch,
+        };
         setState(() {
           DrawingPage.bytes = bytes;
+          DatabaseService()
+              .sendEmoticon(widget.groupId, chatMessageMap);
         });
-
-        print(333);
         nextScreen(
             context,
             ChatPage(

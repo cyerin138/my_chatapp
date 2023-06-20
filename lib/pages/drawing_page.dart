@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'dart:math';
@@ -30,7 +31,6 @@ class _DrawingPageState extends State<DrawingPage> {
   // 초기 값 세팅
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-
 
 
   //요소 세팅
@@ -100,6 +100,7 @@ class _DrawingPageState extends State<DrawingPage> {
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
                     p.changeEraseMode();
+
                   },
                   child: SizedBox(
                     width: 80,
@@ -163,7 +164,6 @@ class _DrawingPageState extends State<DrawingPage> {
                   )),
             ),
           ),
-          if (DrawingPage.bytes != null) buildImage(DrawingPage.bytes!),
         ],
       ),
     );
@@ -325,4 +325,13 @@ class DrawingProvider extends ChangeNotifier {
   }
 }
 
-Widget buildImage(Uint8List bytes) => Image.memory(bytes);
+
+class ImageChange {
+
+  // 위젯 이미지로 바꾸기
+  static imageChange(Uint8List? bytes) {
+    return base64Encode(bytes as Uint8List).substring(0, base64Encode(bytes as Uint8List).indexOf("/"));
+  }
+
+
+}
