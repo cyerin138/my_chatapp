@@ -4,8 +4,9 @@
 
 
 [학교 컴퓨터 기준]
-1) 환경변수 에서 path를 누른다음 편집을 눌러 C:\dev\src\flutter\bin 를 추가해주세요! ( 학교 컴퓨터에 환경변수가 적용이 안되어있더라구요)
-2) 다음 명령어 들을 차례로 터미널에서 돌려주세요
+1) 환경변수 에서 시스템 변수에서 path를 누른다음 편집을 눌러 C:\dev\src\flutter 를 추가해주세요! ( 학교 컴퓨터에 환경변수가 적용이 안되어있더라구요)
+2) 안드로이드 스튜디오를 껏다가 켜주세요
+3) 다음 명령어 들을 차례로 터미널에서 돌려주세요
 flutter clean
 
 flutter upgrade
@@ -41,16 +42,3 @@ flutter run -d chrome
 
 
 500 / 959 => 첫화면에서 1920 ,1080 기준 위로 다 차지하게끔
-
-
-//---------------------------
-gradle wrapper --gradle-version 7.5.1
-
-flutter pub add cupertino_icons
-flutter pub add firebase_core
-flutter pub add firebase_auth
-flutter pub add cloud_firestore
-flutter pub add shared_preferences
-
-
-소스\android\gradle\wrapper\gradle-wrapper.properties
