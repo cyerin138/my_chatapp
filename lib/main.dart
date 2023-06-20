@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 파이어 베이스 연결
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     getUserLoggedInStatus();
   }
-
+  // 로그인 여부 확인
   getUserLoggedInStatus() async {
     await HelperFunctions.getUserLoggedInStatus().then((value) {
       if (value != null) {

@@ -14,6 +14,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  // 요소 세팅
   TextEditingController searchController = TextEditingController();
   bool isLoading = false;
   QuerySnapshot? searchSnapshot;
@@ -28,6 +29,7 @@ class _SearchPageState extends State<SearchPage> {
     getCurrentUserIdandName();
   }
 
+  // 해당 유저 정보 가져오기
   getCurrentUserIdandName() async {
     await HelperFunctions.getUserNameFromSF().then((value) {
       setState(() {
@@ -101,6 +103,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  // 검색 기능
   initiateSearchMethod() async {
     if (searchController.text.isNotEmpty) {
       setState(() {
@@ -118,6 +121,7 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  // 검색 했을 때 그 해당 검색 목록 
   groupList() {
     return hasUserSearched
         ? ListView.builder(
@@ -135,6 +139,7 @@ class _SearchPageState extends State<SearchPage> {
         : Container();
   }
 
+  // 해당 유저가 그 방에 이미 입장했는지 아닌지 확인
   joinedOrNot(
       String userName, String groupId, String groupname, String admin) async {
     await DatabaseService(uid: user!.uid)
@@ -146,6 +151,7 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  // 방 입장하기
   Widget groupTile(
       String userName, String groupId, String groupName, String admin) {
     // function to check whether user already exists in group

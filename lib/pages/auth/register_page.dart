@@ -185,6 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  // 회원가입 값 체크와 회원가입
   register() async {
     if (formKey.currentState!.validate()) {
       setState(() {
@@ -194,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
           .registerUserWithEmailandPassword(fullName, email, password)
           .then((value) async {
         if (value == true) {
-          // saving the shared preference state
+          // shared preference에 저장
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(fullName);

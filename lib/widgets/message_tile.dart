@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 class MessageTile extends StatefulWidget {
+  // 요소 가져오기
   final String message;
   final String sender;
   final bool sentByMe;
@@ -30,6 +31,7 @@ class _MessageTileState extends State<MessageTile> {
     );
   }
 
+  // 채팅 보내는 입장 
   getSenderView(CustomClipper clipper, BuildContext context, String text,
           String user) =>
       Column(
@@ -66,6 +68,7 @@ class _MessageTileState extends State<MessageTile> {
         ],
       );
 
+  // 채팅 받는 입장
   getReceiverView(
           CustomClipper clipper, BuildContext, String text, String user) =>
       Column(

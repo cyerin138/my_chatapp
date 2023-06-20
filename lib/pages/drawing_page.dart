@@ -12,6 +12,7 @@ import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+// 점 정보 타입(클래스) 만들기
 class DotInfo {
   DotInfo(this.offset, this.size, this.color);
 
@@ -20,6 +21,7 @@ class DotInfo {
   final Color color;
 }
 
+// 처음 세팅과 그릴때 쓰이는 함수들 
 class DrawingProvider extends ChangeNotifier {
   final lines = <List<DotInfo>>[];
 
@@ -45,11 +47,13 @@ class DrawingProvider extends ChangeNotifier {
 
   bool get eraseMode => _eraseMode;
 
+  // 지우개 on/off 바꾸기
   void changeEraseMode() {
     _eraseMode = !_eraseMode;
     notifyListeners();
   }
 
+  // 그림 그리기
   void drawStart(Offset offset) {
     var oneLine = <DotInfo>[];
     oneLine.add(DotInfo(offset, size, color));
@@ -57,6 +61,7 @@ class DrawingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 그림 그릴때 / 공간 설정
   void drawing(Offset offset) {
     if(Offset(0, 0) < offset && offset < Offset(500, 500)) {
       lines.last.add(DotInfo(offset, size, color));
@@ -64,6 +69,7 @@ class DrawingProvider extends ChangeNotifier {
     }
   }
 
+  // 지우개 
   void erase(Offset offset) {
     final eraseGap = 15;
     for (var oneLine in List<List<DotInfo>>.from(lines)) {
@@ -88,11 +94,12 @@ class DrawingPage extends StatefulWidget {
 }
 
 class _DrawingPageState extends State<DrawingPage> {
-  // create some values
+  // 초기 값 세팅
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
   final gkeytemp = GlobalKey();
 
+  //요소 세팅
   String userName = "";
   String email = "";
   AuthService authService = AuthService();
@@ -223,6 +230,7 @@ class _DrawingPageState extends State<DrawingPage> {
   }
 
 
+  // 위젯 이미지로 바꾸기 
   imageChange() async {
     final PathProviderWindows provider = PathProviderWindows();
     final path = join(
@@ -301,7 +309,7 @@ class _DrawingPageState extends State<DrawingPage> {
   }
 
 
-
+// colorpicker 모달창
   colorDialog(BuildContext context) {
     showDialog(
         barrierDismissible: false,
@@ -346,6 +354,7 @@ class _DrawingPageState extends State<DrawingPage> {
   }
 }
 
+// 그림 그리기
 class DrawingPainter extends CustomPainter {
   DrawingPainter(this.lines);
 

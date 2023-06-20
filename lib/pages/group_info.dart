@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GroupInfo extends StatefulWidget {
+  // 요소 가져오기
   final String groupId;
   final String groupName;
   final String adminName;
@@ -29,6 +30,7 @@ class _GroupInfoState extends State<GroupInfo> {
     super.initState();
   }
 
+  // 해당 방 멤버들 가져오기
   getMembers() async {
     DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .getGroupMembers(widget.groupId)
@@ -192,6 +194,7 @@ class _GroupInfoState extends State<GroupInfo> {
     );
   }
 
+  // 해당 방 멤버 listview로 보이게 하기
   memberList() {
     return StreamBuilder(
       stream: members,

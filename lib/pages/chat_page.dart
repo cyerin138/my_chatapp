@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
+  // 요소 가져오기
   final String groupId;
   final String groupName;
   final String userName;
@@ -22,6 +23,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  
+  // 요소 설정
   Stream<QuerySnapshot>? chats;
   TextEditingController messageController = TextEditingController();
   String admin = "";
@@ -31,7 +34,8 @@ class _ChatPageState extends State<ChatPage> {
     getChatandAdmin();
     super.initState();
   }
-
+  
+  // 해당 방의 채팅 목록과 방장 가져오기
   getChatandAdmin() {
     DatabaseService().getChats(widget.groupId).then((val) {
       setState(() {
@@ -119,6 +123,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  // 메시지 세팅
   chatMessages() {
     return StreamBuilder(
       stream: chats,
@@ -147,6 +152,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  // 메시지 보내기
   sendMessage() {
     if (messageController.text.isNotEmpty) {
       Map<String, dynamic> chatMessageMap = {

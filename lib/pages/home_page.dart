@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // 요소 세팅
   String userName = "";
   String email = "";
   AuthService authService = AuthService();
@@ -29,8 +30,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     gettingUserData();
   }
-
-  // string manipulation
+  
   String getId(String res) {
     return res.substring(0, res.indexOf("_"));
   }
@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     return res.substring(res.indexOf("_") + 1);
   }
 
+  // 해당 유저 데이터 가져오기
   gettingUserData() async {
     await HelperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -50,7 +51,6 @@ class _HomePageState extends State<HomePage> {
         userName = val!;
       });
     });
-    // getting the list of snapshots in our stream
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .getUserGroups()
         .then((snapshot) {
@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
 
+  // 밑에 바 움직일 때 이벤트
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -162,6 +163,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // 방 생성하는 모달 창
   popUpDialog(BuildContext context) {
     showDialog(
         barrierDismissible: false,
@@ -261,7 +263,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-
+// 해당 유저가 입장 되어있는 방 목록
   groupList() {
     return StreamBuilder(
       stream: groups,
@@ -296,6 +298,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  
+  // 만약 유저가 아무 방에도 입장해있지 않을 경우
   noGroupWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -329,7 +333,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
+// 계정 화면
   userProfile() {
     return  Center(
         child: ListView(

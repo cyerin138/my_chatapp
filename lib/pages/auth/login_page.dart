@@ -158,6 +158,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // 로그인 값 체크 와 로그인
   login() async {
     if (formKey.currentState!.validate()) {
       setState(() {
@@ -170,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
           QuerySnapshot snapshot =
               await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
                   .gettingUserData(email);
-          // saving the values to our shared preferences
+          // shared preferences에 저장
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);

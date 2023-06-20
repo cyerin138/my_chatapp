@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 로그인, 회원가입 디자인
 const textInputDecoration = InputDecoration(
   labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
   focusedBorder: OutlineInputBorder(
@@ -13,15 +14,18 @@ const textInputDecoration = InputDecoration(
   ),
 );
 
+// 다음 화면으로 넘어가는 기능
 void nextScreen(context, page) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
 
+// 다음 화면으로 아예 전환할때 쓰는 기능
 void nextScreenReplace(context, page) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => page));
 }
 
+// 밑에 경고 문이나 알림 보여줄 때 쓰는 기능
 void showSnackbar(context, color, message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

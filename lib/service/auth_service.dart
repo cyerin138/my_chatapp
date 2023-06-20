@@ -3,9 +3,11 @@ import 'package:my_chatapp/service/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
+
+  // 파이어 베이스
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  // login
+  // 로그인
   Future loginWithUserNameandPassword(String email, String password) async {
     try {
       User user = (await firebaseAuth.signInWithEmailAndPassword(
@@ -20,7 +22,7 @@ class AuthService {
     }
   }
 
-  // register
+  // 회원가입
   Future registerUserWithEmailandPassword(
       String fullName, String email, String password) async {
     try {
@@ -38,7 +40,7 @@ class AuthService {
     }
   }
 
-  // signout
+  // 로그아웃
   Future signOut() async {
     try {
       await HelperFunctions.saveUserLoggedInStatus(false);

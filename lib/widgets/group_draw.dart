@@ -3,6 +3,7 @@ import 'package:my_chatapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class GroupDraw extends StatefulWidget {
+  // 요소 가져오기
   final String userName;
   final String groupId;
   final String groupName;
