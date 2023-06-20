@@ -12,7 +12,7 @@ import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/group_tile.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
 import 'package:my_chatapp/widgets/group_draw.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as Path;
 import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
         child: [
           groupList(),
           new SearchPage(),
-          new DrawingPage(),
+          new DrawingPage(gkeytemp: gkeytemp),
           userProfile()
         ].elementAt(_selectedIndex),
       ),
@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
   // 위젯 이미지로 바꾸기
   imageChange() async {
     final PathProviderWindows provider = PathProviderWindows();
-    final path = join(
+    final path = Path.join(
         await provider.getTemporaryPath() as String,
         '${DateTime.now()}.png'
     );
@@ -344,7 +344,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: () {
-              popUpDialog(context as BuildContext);
+              popUpDialog(context);
             },
             child: Icon(
               Icons.add_circle,
@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () async {
                 showDialog(
                     barrierDismissible: false,
-                    context: context as BuildContext,
+                    context: context,
                     builder: (context) {
                       return AlertDialog(
                         title: Text(
