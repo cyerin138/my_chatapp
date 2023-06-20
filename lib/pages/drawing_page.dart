@@ -227,8 +227,10 @@ class _DrawingPageState extends State<DrawingPage> {
                   ElevatedButton(
                     child: const Text('확인'),
                     onPressed: () {
-                      setState(() => currentColor = pickerColor);
-                      _colorWidget(pickerColor);
+                      setState(() {
+                        _colorWidget(pickerColor);
+                        currentColor = pickerColor;
+                      });
                       Navigator.of(context).pop();
                     },
                   ),
