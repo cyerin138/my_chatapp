@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
 import 'package:my_chatapp/pages/search_page.dart';
@@ -6,7 +11,12 @@ import 'package:my_chatapp/service/auth_service.dart';
 import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/group_tile.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
+import 'package:my_chatapp/widgets/group_draw.dart';
+import 'package:path/path.dart';
+import 'package:path_provider_windows/path_provider_windows.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
+  final gkeytemp = GlobalKey();
 
   @override
   void initState() {
@@ -263,6 +274,30 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  // 위젯 이미지로 바꾸기
+  imageChange() async {
+    final PathProviderWindows provider = PathProviderWindows();
+    final path = join(
+        await provider.getTemporaryPath() as String,
+        '${DateTime.now()}.png'
+    );
+
+    if(gkeytemp != null) {
+      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image tempscreen = await rojecet.toImage(
+          pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
+      );
+      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
+      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
+      final File file = File(path);
+      await file.writeAsBytes(png8Byttes);
+
+    } else {
+      print("error");
+    }
+
+  }
+
 // 해당 유저가 입장 되어있는 방 목록
   groupList() {
     return StreamBuilder(
@@ -309,7 +344,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: () {
-              popUpDialog(context);
+              popUpDialog(context as BuildContext);
             },
             child: Icon(
               Icons.add_circle,
@@ -371,7 +406,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () async {
                 showDialog(
                     barrierDismissible: false,
-                    context: context,
+                    context: context as BuildContext,
                     builder: (context) {
                       return AlertDialog(
                         title: Text(

@@ -87,7 +87,9 @@ class DrawingProvider extends ChangeNotifier {
 }
 
 class DrawingPage extends StatefulWidget {
-  const DrawingPage({Key? key}) : super(key: key);
+  final GlobalKey gkeytemp;
+
+  const DrawingPage({Key? key, required this.gkeytemp}) : super(key: key);
 
   @override
   State<DrawingPage> createState() => _DrawingPageState();
@@ -97,7 +99,7 @@ class _DrawingPageState extends State<DrawingPage> {
   // 초기 값 세팅
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-  final gkeytemp = GlobalKey();
+
 
   //요소 세팅
   String userName = "";
@@ -185,7 +187,7 @@ class _DrawingPageState extends State<DrawingPage> {
             ),
           ),
           RepaintBoundary(
-            key: gkeytemp,
+            key: widget.gkeytemp,
             child: Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -230,83 +232,6 @@ class _DrawingPageState extends State<DrawingPage> {
   }
 
 
-  // 위젯 이미지로 바꾸기 
-  imageChange() async {
-    final PathProviderWindows provider = PathProviderWindows();
-    final path = join(
-        await provider.getTemporaryPath() as String,
-      '${DateTime.now()}.png'
-    );
-
-    if(gkeytemp != null) {
-      final RenderRepaintBoundary rojecet = gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      final ui.Image tempscreen = await rojecet.toImage(
-        pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio
-      );
-      final ByteData? byteData = await tempscreen.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
-      final File file = File(path);
-      await file.writeAsBytes(png8Byttes);
-
-    } else {
-      print("error");
-    }
-
-  }
-
-  groupList() {
-    return StreamBuilder(
-      stream: groups,
-      builder: (context, AsyncSnapshot snapshot) {
-        // make some checks
-        if (snapshot.hasData) {
-          if (snapshot.data['groups'] != null) {
-            if (snapshot.data['groups'].length != 0) {
-              return ListView.builder(
-                itemCount: snapshot.data['groups'].length,
-                itemBuilder: (context, index) {
-                  int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupDraw(
-                      groupId: getId(snapshot.data['groups'][reverseIndex]),
-                      groupName: getName(snapshot.data['groups'][reverseIndex]),
-                      userName: snapshot.data['fullName']);
-                },
-              );
-            } else {
-              return noGroupWidget();
-            }
-          } else {
-            return noGroupWidget();
-          }
-        } else {
-          return Center(
-            child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor),
-          );
-        }
-      },
-    );
-  }
-
-  noGroupWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 280,
-            child: Text(
-              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 생성하거나 방 검색에서 방에 입장해보세요!",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey, height: 1.4),
-            ),
-          )
-        ],
-      ),
-    );
-  }
 
 
 // colorpicker 모달창
@@ -373,13 +298,8 @@ class DrawingPainter extends CustomPainter {
         l.add(oneDot.offset);
       }
       p.addPolygon(l, false);
-      canvas.drawPath(
-          p,
-          Paint()
-            ..color = color as Color
-            ..strokeWidth = size as double
-            ..strokeCap = StrokeCap.round
-            ..style = PaintingStyle.stroke);
+      canvas.drawPath(p, Paint() ..color = color as Color ..strokeWidth = size as double
+        ..strokeCap = StrokeCap.round ..style = PaintingStyle.stroke);
     }
   }
 
