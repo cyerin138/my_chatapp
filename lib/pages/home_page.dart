@@ -1,9 +1,3 @@
-import 'dart:io';
-import 'dart:ui' as ui;
-import 'dart:math';
-import 'dart:typed_data';
-
-
 import 'package:my_chatapp/helper/helper_function.dart';
 import 'package:my_chatapp/pages/auth/login_page.dart';
 import 'package:my_chatapp/pages/search_page.dart';
@@ -12,12 +6,8 @@ import 'package:my_chatapp/service/auth_service.dart';
 import 'package:my_chatapp/service/database_service.dart';
 import 'package:my_chatapp/widgets/group_tile.dart';
 import 'package:my_chatapp/widgets/widgets.dart';
-import 'package:my_chatapp/widgets/group_draw.dart';
-import 'package:path_provider_windows/path_provider_windows.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
-  final gkeytemp = GlobalKey();
 
   @override
   void initState() {
@@ -151,28 +140,25 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Center(
-        child: [groupList(), new SearchPage(), Column(
-          children: [
-            new DrawingPage(gkeytemp: gkeytemp),
-            // groupListDraw()
-          ],
-        ), userProfile()]
-            .elementAt(_selectedIndex),
+        child: [
+          groupList(),
+          new SearchPage(),
+          new DrawingPage(),
+          userProfile()
+        ].elementAt(_selectedIndex),
       ),
-      floatingActionButton: _selectedIndex == 0
-          ? FloatingActionButton(
-              onPressed: () {
-                popUpDialog(context);
-              },
-              elevation: 0,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 30,
-              ),
-            )
-          : null,
+      floatingActionButton: _selectedIndex == 0 ?  FloatingActionButton(
+        onPressed: () {
+          popUpDialog(context);
+        },
+        elevation: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
+      ) : null,
     );
   }
 
@@ -275,6 +261,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+
   groupList() {
     return StreamBuilder(
       stream: groups,
@@ -318,7 +305,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: () {
-              popUpDialog(context as BuildContext);
+              popUpDialog(context);
             },
             child: Icon(
               Icons.add_circle,
@@ -342,199 +329,127 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
   userProfile() {
-    return Center(
+    return  Center(
         child: ListView(
-      padding: const EdgeInsets.symmetric(vertical: 40),
-      children: [
-        Icon(
-          Icons.account_circle,
-          size: 150,
-          color: Colors.grey[600],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          userName,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        Text(
-          email,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        const Divider(
-          height: 2,
-        ),
-        ListTile(
-          onTap: () async {
-            showDialog(
-                barrierDismissible: false,
-                context: context as BuildContext,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(
-                      "로그 아웃",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87),
-                    ),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 40,
-                          child: Text(
-                            "정말 로그아웃 하시겠습니까?",
-                            style:
-                                TextStyle(fontSize: 18, color: Colors.black87),
-                          ),
+          padding: const EdgeInsets.symmetric(vertical: 40),
+          children: [
+            Icon(
+              Icons.account_circle,
+              size: 150,
+              color: Colors.grey[600],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              userName,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              email,
+              textAlign: TextAlign.center,
+              style: TextStyle( fontSize: 16, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            const Divider(
+              height: 2,
+            ),
+
+            ListTile(
+              onTap: () async {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "로그 아웃",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
-                              width: 110,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  await authService.signOut();
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginPage()),
-                                      (route) => false);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Theme.of(context).primaryColor,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 0, vertical: 18),
-                                ),
-                                child: Text("로그아웃"),
+                              height: 40,
+                              child: Text(
+                                "정말 로그아웃 하시겠습니까?",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black87),
                               ),
                             ),
-                            SizedBox(
-                              width: 110,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    side: BorderSide(
-                                      width: 0.5,
-                                      color: Color.fromARGB(255, 65, 232, 201),
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      await authService.signOut();
+                                      Navigator.of(context)
+                                          .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const LoginPage()),
+                                              (route) => false);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Theme.of(context).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 18),
                                     ),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 18),
-                                    backgroundColor: Colors.white),
-                                child: Text("닫기",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor)),
-                              ),
+                                    child: Text("로그아웃"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        side: BorderSide(
+                                          width: 0.5,
+                                          color: Color.fromARGB(
+                                              255, 65, 232, 201),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 18),
+                                        backgroundColor: Colors.white),
+                                    child: Text("닫기",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .primaryColor)),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  );
-                });
-          },
-          contentPadding:
+                      );
+                    });
+              },
+              contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          leading: const Icon(Icons.exit_to_app),
-          title: const Text(
-            "로그아웃",
-            style: TextStyle(color: Colors.black),
-          ),
-        )
-      ],
-    ));
-  }
-
-  imageChange() async {
-    final PathProviderWindows provider = PathProviderWindows();
-    final path = join(
-        await provider.getTemporaryPath() as String, '${DateTime.now()}.png');
-
-    if (gkeytemp != null) {
-      final RenderRepaintBoundary rojecet =
-          gkeytemp.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      final ui.Image tempscreen = await rojecet.toImage(
-          pixelRatio: MediaQuery.of(gkeytemp.currentContext!).devicePixelRatio);
-      final ByteData? byteData =
-          await tempscreen.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List png8Byttes = byteData!.buffer.asUint8List();
-      final File file = File(path);
-      await file.writeAsBytes(png8Byttes);
-    } else {
-      print("error");
-    }
-  }
-
-  groupListDraw() {
-    return StreamBuilder(
-      stream: groups,
-      builder: (context, AsyncSnapshot snapshot) {
-        // make some checks
-        print(11);
-        if (snapshot.hasData) {
-          print(22);
-          if (snapshot.data['groups'] != null) {
-            print(33);
-            if (snapshot.data['groups'].length != 0) {
-              print(44);
-              return ListView.builder(
-                itemCount: snapshot.data['groups'].length,
-                itemBuilder: (context, index) {
-                  int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupDraw(
-                      groupId: getId(snapshot.data['groups'][reverseIndex]),
-                      groupName: getName(snapshot.data['groups'][reverseIndex]),
-                      userName: snapshot.data['fullName']);
-                },
-              );
-            } else {
-              return noGroupDraw();
-            }
-          } else {
-            return noGroupDraw();
-          }
-        } else {
-          return Center(
-            child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor),
-          );
-        }
-      },
-    );
-  }
-
-  noGroupDraw() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 280,
-            child: Text(
-              "입장한 방이 없습니다. 추가 아이콘을 눌러 방을 생성하거나 방 검색에서 방에 입장해보세요!",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey, height: 1.4),
-            ),
-          )
-        ],
-      ),
-    );
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text(
+                "로그아웃",
+                style: TextStyle(color: Colors.black),
+              ),
+            )
+          ],
+        ));
   }
 }
