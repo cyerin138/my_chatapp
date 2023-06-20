@@ -105,6 +105,7 @@ class _DrawingPageState extends State<DrawingPage> {
               children: [
                 ElevatedButton(
                     onPressed: () {
+                      p._eraseMode = false;
                       colorDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
