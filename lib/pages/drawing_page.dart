@@ -96,10 +96,10 @@ class _DrawingPageState extends State<DrawingPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1, color: Colors.grey.shade300),
-              ),
-            ),
+                border: Border(
+                  bottom: BorderSide(width: 1, color: Colors.grey.shade300),
+                ),
+                color: Colors.white),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -144,33 +144,42 @@ class _DrawingPageState extends State<DrawingPage> {
               ],
             ),
           ),
-          Expanded(
-              child: Stack(
-            children: [
-              Positioned.fill(
-                  child: CustomPaint(
-                painter: DrawingPainter(p.lines),
-              )),
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onPanStart: (s) {
-                  if (p.eraseMode) {
-                    p.erase(s.localPosition);
-                  } else {
-                    p.drawStart(s.localPosition);
-                  }
-                },
-                onPanUpdate: (s) {
-                  if (p.eraseMode) {
-                    p.erase(s.localPosition);
-                  } else {
-                    p.drawing(s.localPosition);
-                  }
-                },
-                child: Container(),
-              ),
-            ],
-          )),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(width: 1, color: Colors.grey.shade300),
+                ),
+                color: Colors.white),
+            child: SizedBox(
+                height: 500,
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    Positioned.(
+                        child: CustomPaint(
+                      painter: DrawingPainter(p.lines),
+                    )),
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onPanStart: (s) {
+                        if (p.eraseMode) {
+                          p.erase(s.localPosition);
+                        } else {
+                          p.drawStart(s.localPosition);
+                        }
+                      },
+                      onPanUpdate: (s) {
+                        if (p.eraseMode) {
+                          p.erase(s.localPosition);
+                        } else {
+                          p.drawing(s.localPosition);
+                        }
+                      },
+                      child: Container(),
+                    ),
+                  ],
+                )),
+          ),
         ],
       ),
     );
@@ -210,7 +219,6 @@ class _DrawingPageState extends State<DrawingPage> {
                         p.changeColor = pickerColor;
                         currentColor = pickerColor;
                       });
-
                     },
                   ),
                 ],
