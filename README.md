@@ -4,4 +4,7 @@
 
 ## 거지톡방(이모티콘) + 카카오톡 = 콘톡
 
+ <img src="https://img.shields.io/badge/Flutter-02569B?style=flat&logo=Flutter&logoColor=white"/>
+
+#
 완성은 했으나 설명 내용은 나중에 추가 예정....
