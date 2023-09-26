@@ -11,4 +11,4 @@
 
 ## 거지톡방(이모티콘) + 카카오톡 = 콘톡
 혹시 거지 톡방을 아시나요?? 한참 
-<img src="https://mblogthumb-phinf.pstatic.net/MjAyMzA0MDdfN…hvT0g.JPEG.noh0058/187575cf9ebdf50e.jpg?type=w800"/>
+<img src="[https://mblogthumb-phinf.pstatic.net/MjAyMzA0MDdfN…hvT0g.JPEG.noh0058/187575cf9ebdf50e.jpg?type=w800](https://postfiles.pstatic.net/MjAyMzA0MDdfNjUg/MDAxNjgwNzk5OTM3NjA2.ydfuRol1pBF3oNk8tDeD0n2tBnu3q1BerLZzTY_AXcYg.9RRHXSyMmSKFkjkf0swHCIDD0dejjUY5LzRJ2hjhvT0g.JPEG.noh0058/187575cf9ebdf50e.jpg?type=w773)https://postfiles.pstatic.net/MjAyMzA0MDdfNjUg/MDAxNjgwNzk5OTM3NjA2.ydfuRol1pBF3oNk8tDeD0n2tBnu3q1BerLZzTY_AXcYg.9RRHXSyMmSKFkjkf0swHCIDD0dejjUY5LzRJ2hjhvT0g.JPEG.noh0058/187575cf9ebdf50e.jpg?type=w773"/>
